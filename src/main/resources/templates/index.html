@@ -3,7 +3,7 @@
 <!--head(~{::title}) 传递整个title元素-->
 <head th:replace="fragments/blog-fragments :: head(~{::title})">
     <meta charset="UTF-8">
-    <title>嘟嘟小梦</title>
+    <title>首页 | 嘟嘟小梦</title>
     <link href="../static/images/logo.png" rel="icon" type="image/x-ico">
     <link rel="stylesheet" href="../static/css/semantic.min.css">
     <link rel="stylesheet" href="../static/css/animate.css">
@@ -318,9 +318,7 @@
                                     <span class="chip center-align waves-effect m-margin-r-2em blog-one-label"
                                           onclick="loadCategory(this)" th:title="${blog.category.name}"
                                           style="display: flex;justify-content: space-around"
-                                          th:attr="data-categoryId=${blog.category.id}">
-                                        <span th:text="${blog.category.name}">SpringBoot</span>
-                                        <span class="tag-length" th:text="${blog.category.blogs.size()}">3</span>
+                                          th:attr="data-categoryId=${blog.category.id}" th:text="${blog.category.name}">
                                     </span>
                                 </div>
                             </div>

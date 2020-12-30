@@ -123,10 +123,12 @@
             <div class="blog-links ui segment stackable m-opacity">
                 <!--文章类型标签-->
                 <div class="blog-link blog-ml" style="margin: -0.5em 0 1em -1em">
+                    <!--/*-->
                     <span class="chip center-align waves-effect m-margin-r-2em blog-one-label">
                         <span th:text="*{category.name}">SpringBoot</span>
                         <span class="tag-length" th:text="*{category.blogs.size()}">3</span>
                     </span>
+                    <!--*/-->
                 </div>
                 <div class="blog-link">
                     <i class="user icon"></i><span class="blog-link-label">文章作者: </span><a
@@ -333,6 +335,10 @@
 <!--/*/</th:block>/*/-->
 <script src="../static/js/jquery.scrollTo.min.js" th:src="@{/js/jquery.scrollTo.min.js}"></script>
 <script th:inline="javascript">
+    let codes = $("code");
+    $.each(codes, function (index) {
+        $(this).parent().attr("class",$(this).attr("class"));
+    });
     // 开启滚动动画
     new WOW().init();
     //博客打赏

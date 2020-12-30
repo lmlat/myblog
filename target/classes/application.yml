@@ -11,7 +11,7 @@ spring:
   profiles:
     active: dev # 激活生产环境
 server:
-  port: 8088
+  port: 80
 
 # 自定义评论头像值
 comment.avatar: https://lml-bucket.oss-cn-beijing.aliyuncs.com/avatar/5.jpg

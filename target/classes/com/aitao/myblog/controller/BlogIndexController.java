@@ -53,17 +53,17 @@ public class BlogIndexController {
     public String pageSearch(@PathVariable("number") Integer number,
                              Model model) {
         //容错
-        if (number <= 0) {
-            number = 1;
+        if (number < 0) {
+            number = 0;
         }
         //定义排序规则(数据库中从0开始是第一页)
-        Pageable currPageable = PageRequest.of(number - 1, 12, Sort.by(Sort.Direction.DESC, "views"));
+        Pageable currPageable = PageRequest.of(number, 12, Sort.by(Sort.Direction.DESC, "views"));
         Page<Blog> blogs = blogService.listLatestBlog(currPageable);
         System.out.println("page:" + currPageable.getPageNumber());
         System.out.println("pageSize:" + currPageable.getPageSize());
         System.out.println("offset:" + currPageable.getOffset());
         System.out.println("total:" + blogs.getContent().size());
-        model.addAttribute("CURRENT_BLOG", blogs.getContent());
+        model.addAttribute("CURRENT_BLOG", blogs);
         return "blog-next";
     }
 

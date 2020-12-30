@@ -43,7 +43,7 @@
     <img src="../static/images/banner/4.jpg" th:src="@{/images/banner/4.jpg}" alt="" class="ui fluid image m-opacity-0">
 </div>
 <!--内容部分-->
-<div id="blog-body" class="animated fadeIn m-margin-top-5em">
+<div id="blog-body" class="animated fadeIn m-margin-top-1em">
     <div class="ui container">
         <!--卡片博客数据-->
         <div id="blog-label-cards"
@@ -60,7 +60,7 @@
                     </a>
                     <div class="content" style="padding-bottom:6px;color: #34495e;">
                         <div class="m-more-ellipsis" style="font-size:16px;margin-bottom:6px;" th:text="*{keyword}">
-                            基石无人机花木成畦手自栽基材基材基材花木成畦手自栽花木成畦手自栽
+                            基石
                         </div>
                         <span class="right floated">
                           <i class="bookmark icon"></i>
@@ -78,6 +78,90 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <!--分页页码-->
+        <div class="ui vertical segment stackable">
+            <div class="ui grid m-ml-mr-6 m-margin-0">
+                <div class="five wide column left aligned" th:if="${CURRENT_BLOG.first == false}">
+                    <a href="javascript:;" th:href="@{'/index/page/'+${CURRENT_BLOG.number - 1}}"
+                       class="ui large center aligned header m-border-radius-50 m-display-inline-block m-bg-blog m-w-h-50">
+                        <i class="angle left icon m-w-h-50"></i>
+                    </a>
+                </div>
+                <div class="five wide column left aligned" th:if="${CURRENT_BLOG.first}  == true">
+                    <a href="javascript:;" style="cursor: not-allowed;background: #eaeaea;color: #34495e;"
+                       class="ui large center aligned header m-border-radius-50 m-display-inline-block m-w-h-50">
+                        <i class="angle left icon m-w-h-50"></i>
+                    </a>
+                </div>
+                <div class="five wide column center aligned"
+                     style="line-height: 60px;font-weight:500;font-size: 20px;color:#fff">
+                    <span class="curr" th:text="${CURRENT_BLOG.number+1}">1</span>
+                    <span>&nbsp;&nbsp;/&nbsp;&nbsp;</span>
+                    <span class="total" th:text="${CURRENT_BLOG.totalPages}">5</span>
+                </div>
+                <div class="five wide column right aligned" th:if="${CURRENT_BLOG.last} == false">
+                    <a href="javascript:;" th:href="@{'/index/page/'+${CURRENT_BLOG.number + 1}}"
+                       class="ui large header m-border-radius-50 m-display-inline-block m-bg-blog m-w-h-50">
+                        <i class="angle right icon m-w-h-50"></i>
+                    </a>
+                </div>
+                <div class="five wide column right aligned" th:if="${CURRENT_BLOG.last == true}">
+                    <a href="javascript:;" style="cursor: not-allowed;background: #eaeaea;color: #34495e;"
+                       class="ui large header m-border-radius-50 m-display-inline-block m-w-h-50">
+                        <i class="angle right icon m-w-h-50"></i>
+                    </a>
+                </div>
+            </div>
+            <!--<div class="ui grid m-ml-mr-6">
+                <div class="blog-left seven wide column m-border-radius-8 blog"
+                     style="background:url(https://lml-bucket.oss-cn-beijing.aliyuncs.com/blog-background/1001414.jpg) no-repeat;background-size: cover">
+                    <a href="javascript:;" class="ui left label m-bg-blog" style="position: absolute;top:0;left:0;">
+                        <i class="angle left icon" style="margin: 0 .75em 0 .3em !important;"></i>上一篇
+                    </a>
+                    <div class="ui list link">
+                        <div class="m-label-type">
+                            <a href="" class="category m-c-fff">算法</a>
+                            <a href="" class="category m-c-fff">数据结构</a>
+                            <a href="" class="category m-c-fff">c++</a>
+                        </div>
+                        <a href="" class="item m-padding-2">
+                            <h2 class="ul header m-c-fff">分支限界法思想和案例</h2>
+                        </a>
+                        <p class="m-article-description">
+                            装载问题,旅行售货员问题,0-1背包问题
+                        </p>
+                        <a href="" class="m-article-read"
+                           style="background: linear-gradient(to right, #FF5E3A 0%, #FF2A68 100%);" target="_blank">
+                            <i class="eye icon"></i>阅读更多
+                        </a>
+                    </div>
+                </div>
+                <div class="blog-right seven wide column m-border-radius-8 blog"
+                     style="background:url(https://lml-bucket.oss-cn-beijing.aliyuncs.com/blog-background/1001414.jpg) no-repeat;background-size: cover">
+                    <a href="javascript:;" class="ui label m-bg-blog" style="position: absolute;top:0;right:-1px;">
+                        下一篇 <i class="angle right icon" style="margin: 0 .75em 0 .3em !important;"></i>
+                    </a>
+                    <div class="ui list link">
+                        <div class="m-label-type">
+                            <a href="" class="category m-c-fff">算法</a>
+                            <a href="" class="category m-c-fff">数据结构</a>
+                            <a href="" class="category m-c-fff">c++</a>
+                        </div>
+                        <a href="" class="item m-padding-2">
+                            <h2 class="ul header m-c-fff">分支限界法思想和案例</h2>
+                        </a>
+                        <p class="m-article-description">
+                            装载问题,旅行售货员问题,0-1背包问题
+                        </p>
+                        <a href="" style="background:linear-gradient(to right, #55EFCB 0%, #5BCAFF 100%);"
+                           class="m-article-read" target="_blank">
+                            <i class="eye icon"></i>阅读更多
+                        </a>
+                    </div>
+                </div>
+            </div>-->
+
         </div>
     </div>
 </div>
@@ -135,7 +219,7 @@
             </div>
         </div>
         <div class="ui section divider inverted"></div>
-        <p class="m-letter-spacing-opacity-8">Copyright © 2020 哆啦A梦--蓝胖子</p>
+        <p class="m-letter-spacing-opacity-8">Copyright © 2020 哆啦A梦--嘟嘟小梦</p>
     </div>
 </footer>
 <script src="../static/js/jquery-min-3.4.1.js" th:src="@{/js/jquery-min-3.4.1.js}"></script>
