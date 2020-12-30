@@ -1,0 +1,18 @@
+spring:
+  thymeleaf:
+    prefix: classpath:/templates/
+    check-template-location: true  #check-tempate-location: 检查模板路径是否存在
+    cache: false
+    suffix: .html
+    mode: HTML5
+    servlet:
+      content-type: text/html
+    encoding: utf-8
+  profiles:
+    active: dev # 激活生产环境
+server:
+  port: 8088
+
+# 自定义评论头像值
+comment.avatar: https://lml-bucket.oss-cn-beijing.aliyuncs.com/avatar/5.jpg
+

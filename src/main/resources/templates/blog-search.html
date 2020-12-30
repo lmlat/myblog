@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/xhtml"
+      xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head th:replace="fragments/blog-fragments :: head(~{::title})">
+    <meta charset="UTF-8">
+    <title>搜索结果 | 嘟嘟小梦</title>
+    <link href="../static/images/logo.png" rel="icon" type="image/x-ico">
+    <link rel="stylesheet" href="../static/css/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/animate.css">
+    <link rel="stylesheet" href="../static/lib/snow/snow.css">
+    <link rel="stylesheet" href="../static/css/blog/global.css">
+    <link rel="stylesheet" href="../static/css/blog/blog-label.css">
+    <style>
+        [v-clock]:not(body) {
+            display: none;
+        }
+    </style>
+</head>
+<body class="m-blog-main-bg">
+<!--雪花-->
+<div class="snow" th:replace="fragments/blog-fragments :: snow"></div>
+<!--头部-->
+<header id="header" th:replace="fragments/blog-fragments :: header_menu(-1)"
+        class="ui inverted attached segment m-pt-pb m-bg-transparent m-border-transparent">
+    <div class="ui container">
+        <div class="ui inverted stackable secondary menu">
+            <h2 class="ui header item">DoraeLamon</h2>
+            <a href="" class="m-mobile-item item m-mobile-hide"><i class="home icon"></i>首页</a>
+            <a href="" class="m-mobile-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
+            <a href="" class="m-mobile-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
+            <a href="" class="m-mobile-item item m-mobile-hide"><i class="archive icon"></i>归档</a>
+            <a href="" class="m-mobile-item item m-mobile-hide"><i class="file image icon"></i>个人相册</a>
+            <a href="" class="m-mobile-item item m-mobile-hide"><i class="comments icon"></i>留言板</a>
+            <a href="" class="m-mobile-item item m-mobile-hide"><i class="info icon"></i>关于我</a>
+            <div class="m-mobile-item item ui right inverted input large icon transparent center aligned m-mobile-hide">
+                <input type="text" placeholder="Search...">
+                <i class="search icon link"></i>
+            </div>
+        </div>
+    </div>
+    <a href="javascript:;" id="m-mobile-btn" class="ui button black icon m-mobile-show"
+       style="position: absolute;top: 1em;right: 0;">
+        <i class="sidebar icon"></i>
+    </a>
+</header>
+<!--背景图-->
+<div id="blog-bg" class="ui fluid container">
+    <h1 class="ui header blog-title m-position-absolute-center animated fadeInUp">写代码是热爱，写到世界充满爱！</h1>
+    <img src="../static/images/banner/4.jpg" th:src="@{/images/banner/4.jpg}" alt="" class="ui fluid image">
+</div>
+<!--内容部分-->
+<div class="blog-label m-margin-top-5em" id="blog-body">
+    <div class="ui container">
+        <!--博客内容部分-->
+        <div class="ui segments m-margin-0">
+            <div class="ui segment center aligned m-display-flex" style="justify-content: space-between">
+                <h3 class="ui header m-margin-0" style="color:#34495e;">
+                    搜索结果
+                </h3>
+                <div class="ui ">
+                    <span class="m-font-size-14">共</span>&nbsp;<span
+                        class="ui header basic orange m-font-size-16" th:text="${#arrays.length(blogs)}">12</span>&nbsp;<span
+                        class="m-font-size-14">条记录</span>
+                </div>
+            </div>
+            <!--数据为空时显示该区域内容-->
+            <div class="ui segment flowing center aligned" th:if="${#arrays.length(blogs)}<=0">
+                <img src="../static/images/404.png" th:src="@{/images/404.png}" alt=""
+                     class="ui avatar tiny image m-opacity">
+                <h3 class="ui header m-opacity">很遗憾,没有找到多余的数据~_~</h3>
+            </div>
+        </div>
+        <div class="ui vertical stackable segment blog-latest-article" th:if="${#arrays.length(blogs)}>0">
+            <!--博客数据-->
+            <div class="ui vertical segment stackable m-border-transparent m-padding-0" style="margin-top: -20px;">
+                <div th:each="blog : ${blogs}" th:object="${blog}" class="ui segment search-blog" style="margin: 2rem 0;">
+                    <div class="ui grid stackable mobile reversed">
+                        <div class="post-date">
+                            <div class="post-month" th:text="|*{#dates.format(updateTime,'MM')}月|"> 12月</div>
+                            <div class="post-day" th:text="*{#dates.format(updateTime,'dd')}"> 15</div>
+                        </div>
+                        <div class="five wide column">
+                            <a href="javascript:;" onclick="look($(this));">
+                                <img th:src="*{bgImage}"
+                                     alt="" class="ui rounded image">
+                            </a>
+                        </div>
+                        <div class="eleven wide column left aligned">
+                            <a href="javascript:;" class="ui right ribbon orange label large"
+                               th:classappend="${blog.flag==1?'orange':(blog.flag==2?'blue':'yellow')}"
+                               th:text="${blog.flag==1?'原创':(blog.flag==2?'转载':'翻译')}">原创</a>
+                            <a href="javascript:;" onclick="look($(this));" class="ui large header" th:text="*{title}"
+                               th:attr="data-id=*{id},data-title=*{title}">Intellij
+                                IDEA快捷键大全</a>
+                            <p class="m-mt-mb-5 m-more-ellipsis" th:text="*{keyword}">
+                                古人有云：工欲善其事，必先利其器，要是只是手握利器，而不能发挥其最大的效益，那无异于赤手空拳，对敌对垒。
+                                那古人所云，未得其精髓，只能为碎语闲言尔。</p>
+                            <div class="ui grid">
+                                <div class="thirteen wide column">
+                                    <div class="ui horizontal link list center aligned">
+                                        <div class="item">
+                                            <img th:src="${blog.user.avatar}"
+                                                 alt="" class="ui avatar image">
+                                            <div class="content">
+                                                <a href="" th:text="*{user.nickname}" class="header">艾韬</a>
+                                            </div>
+                                        </div>
+                                        <div class="item" style="line-height: 11px;">
+                                            <i class="calendar icon"></i><span
+                                                th:text="*{#dates.format(createTime,'yyyy-MM-dd HH:mm:ss')}">2017-10-01</span>
+                                        </div>
+                                        <div class="item" style="line-height: 13px;">
+                                            <i class="eye icon" style="margin:5px;"></i><span
+                                                th:text="*{views}">123</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="three wide column">
+                                    <div class="blog-label">
+                                    <span class="chip center-align waves-effect m-margin-r-2em blog-one-label"
+                                          onclick="loadCategory(this)" th:title="*{category.name}"
+                                          style="display: flex;justify-content: space-around"
+                                          th:attr="data-categoryId=*{category.id}">
+                                        <span th:text="*{category.name}">SpringBoot</span>
+                                        <span class="tag-length" th:text="*{#arrays.length(category.blogs)}">3</span>
+                                    </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--最新文章结束-->
+        </div>
+    </div>
+</div>
+<!--尾部-->
+<footer class="ui segment vertical inverted m-padding-5 m-bg-blog m-opacity"
+        th:replace="fragments/blog-fragments :: footer">
+    <div class="ui container center aligned">
+        <!--格子布局占16份-->
+        <div class="ui grid divided inverted center aligned stackable">
+            <!--占3列-->
+            <div class="five wide column">
+                <div class="ui list link inverted">
+                    <h4 class="ui inverted header">联系我</h4>
+                    <a href="javascript:;" class="item"><span>Email:</span>1003448731@qq.com</a>
+                    <a href="javascript:;" class="item"><span>QQ:</span>1003448731</a>
+                    <a href="javascript:;" class="item"><span>WX:</span>tg98589</a>
+                    <a href="javascript:;" class="item"><span>博客园:</span>tg98589</a>
+                    <a href="https://blog.csdn.net/qq100344" target="_blank"
+                       class="item m-one-ellipsis"><span>CSDN:</span>https://blog.csdn.net/qq100344</a>
+                </div>
+            </div>
+            <div class="four wide column vertical">
+                <div class="ui list link inverted">
+                    <h4 class="ui inverted header">最新博客</h4>
+                    <a href="#" class="item m-one-ellipsis">第一篇博客第一篇博客第一篇博客第一篇博客</a>
+                    <a href="#" class="item m-one-ellipsis">第二篇博客第二篇博客第二篇博客第二篇博客</a>
+                    <a href="#" class="item m-one-ellipsis">第三篇博客第三篇博客第三篇博客第三篇博客</a>
+                    <a href="#" class="item m-one-ellipsis">第四篇博客第四篇博客第四篇博客第四篇博客</a>
+                    <a href="#" class="item m-one-ellipsis">第五篇博客第五篇博客第五篇博客第五篇博客</a>
+                </div>
+            </div>
+
+            <div class="three wide column center aligned vertical">
+                <div class="ui list link inverted">
+                    <h4 class="ui header  inverted">统计数据</h4>
+                    <a href="javascript:;" class="item"><span>文章总数:&nbsp;&nbsp;</span><span
+                            class="ui header basic orange"
+                            style="display: inline-block;">45</span>&nbsp;&nbsp;篇<span></span></a>
+                    <a href="javascript:;" class="item"><span>访问总数:&nbsp;&nbsp;</span><span
+                            class="ui header basic orange"
+                            style="display: inline-block;">65</span><span>&nbsp;&nbsp;次</span></a>
+                    <a href="javascript:;" class="item"><span>评论总数:&nbsp;&nbsp;</span><span
+                            class="ui header basic orange"
+                            style="display: inline-block;">24</span><span>&nbsp;&nbsp;条</span></a>
+                    <a href="javascript:;" class="item"><span>留言总数:&nbsp;&nbsp;</span><span
+                            class="ui header basic orange"
+                            style="display: inline-block;">78</span><span>&nbsp;&nbsp;条</span></a>
+                </div>
+            </div>
+            <!--占3列-->
+            <div class="four wide column center aligned vertical">
+                <h4 class="ui header inverted">关注我</h4>
+                <img src="../static/images/tg98589.png" alt="" class="ui image rounded middle aligned"
+                     style="width: 120px;height: 120px;">
+            </div>
+        </div>
+        <div class="ui section divider inverted"></div>
+        <p class="m-letter-spacing-opacity-8">Copyright © 2020 哆啦A梦--蓝胖子</p>
+    </div>
+</footer>
+<!--/*/<th:block th:replace="fragments/blog-fragments :: script">/*/-->
+<script src="../static/js/jquery-min-3.4.1.js" th:src="@{/js/jquery-min-3.4.1.js}"></script>
+<script src="../static/js/axios.min.js" th:src="@{/js/axios.min.js}"></script>
+<script src="../static/js/semantic.min.js" th:src="@{/js/semantic.min.js}"></script>
+<script src="../static/lib/snow/snow.min.js" th:src="@{/lib/snow/snow.min.js}"></script>
+<script src="../static/lib/wow/wow.min.js" th:src="@{/lib/wow/wow.min.js}"></script>
+<script src="../static/js/blog/global.js" th:src="@{/js/blog/global.js}"></script>
+<!--/*/</th:block>/*/-->
+<script>
+    //加载滚动插件
+    let sr = ScrollReveal({
+        reset: true
+    });
+    sr.reveal('.search-blog:nth-child(even)', {
+        duration: 500,
+        origin: 'left',
+        opacity: 0,
+        delay: 0,
+        easing: 'cubic-bezier(0.6, 0.2, 0.1, 1)',
+        mobile: true,
+        useDelay: 'always',
+        viewFactor: 0.2,
+        viewOffset: {
+            top: 10,
+            right: 5,
+            bottom: 5,
+            left: 0
+        }
+    });
+    sr.reveal('.search-blog:nth-child(odd)', {
+        duration: 500,
+        origin: 'right'
+    });
+</script>
+</body>
+</html>

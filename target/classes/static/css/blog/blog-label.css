@@ -1,0 +1,58 @@
+#blog-bg {
+    height: 300px;
+    position: relative;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    margin: 0 !important;
+}
+
+
+#blog-bg > img {
+    height: 400px;
+}
+
+#blog-body {
+    margin-bottom: 2em !important;
+}
+
+/*博客标题*/
+.blog-title {
+    bottom: 1em !important;
+    z-index: 300 !important;
+    font-size: 3rem !important;
+    font-weight: 400 !important;
+    color: #eee !important;
+    text-align: center !important;
+}
+
+
+/*所有标签*/
+.blog-all-label {
+    width: 800px !important;
+    margin: 0 auto !important;
+    user-select: none !important;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.blog-label-cards {
+    border-radius: 10px !important;
+}
+
+.m-blog-label-card {
+    width: 340px !important;
+    margin-left: 1.8em !important;
+    transition: 1s !important;
+}
+
+.m-blog-label-card:hover {
+    transform: scale(1.1) !important;
+}
+
+#blog-category-chart{
+    width: 600px !important;
+    height: 400px !important;
+    margin: 0 auto !important;
+}

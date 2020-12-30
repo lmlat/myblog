@@ -1,0 +1,87 @@
+/*首页样式*/
+.blog-swiper-info {
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: 400;
+    width: 500px;
+    height: 400px;
+    line-height: 1.85em !important;
+}
+
+.blog-swiper-title {
+    line-height: 1.85em !important;
+    margin-bottom: .7em !important;
+    font-size: 3em !important;
+    color: rgba(255, 255, 255, .8) !important;
+    font-weight: 400 !important;
+}
+
+.blog-swiper-description {
+    font-weight: 300 !important;
+    font-size: 1.25rem !important;
+    line-height: 1.4em !important;
+    color: #eee !important;
+    text-align: center !important;
+    box-sizing: inherit !important;
+    margin-bottom: 8em !important;
+}
+
+.blog-swiper-read-btn {
+    display: inline-block !important;
+    color: #eee !important;
+    width: 130px !important;
+    background: transparent !important;
+    border: 1px solid #fff !important;
+    text-align: center !important;
+    min-height: 0 !important;
+    line-height: 2em !important;
+    transition: 1s !important;
+}
+
+.blog-swiper-read-btn:hover {
+    background: rgb(244, 67, 54) !important;
+    border: 1px solid rgb(244, 67, 54) !important;
+}
+
+.blog-latest {
+    margin: 1em !important;
+    border-radius: 8px !important;
+    transition: 1s !important;
+}
+
+.blog-left {
+    margin: 1em !important;
+    transition: 1s !important;
+}
+
+.blog-right {
+    margin: 1em !important;
+    transition: 1s !important;
+}
+
+.blog-latest:hover, .blog-left:hover, .blog-right:hover {
+    transform: scale(1) !important;
+    transition: 1s !important;
+}
+
+.index .blog-label {
+    width: 800px !important;
+    margin: 0 auto !important;
+    user-select: none !important;
+}
+
+/*修改默认swiper样式*/
+.swiper-container {
+    width: 100% !important;
+    height: 625px !important;
+}
+
+.swiper-container img {
+    width: 100% !important;
+    height: 625px !important;
+}
+
+
+
+

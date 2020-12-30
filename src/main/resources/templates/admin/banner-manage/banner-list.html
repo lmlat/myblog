@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/admin-fragments :: head(~{::title})">
+    <meta charset="UTF-8">
+    <title>轮播图列表页</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>
+    <link rel="stylesheet" href="../../../static/css/admin/font.css" th:href="@{/css/admin/font.css}">
+    <link rel="stylesheet" href="../../../static/css/admin/xadmin.css" th:href="@{/css/admin/xadmin.css}">
+    <script src="../../../static/lib/layui/layui.js" charset="utf-8" th:src="@{/lib/layui/layui.js}"></script>
+    <script type="text/javascript" src="../../../static/js/xadmin.js" th:src="@{/js/xadmin.js}"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+    <script src="../../../static/js/html5.min.js" th:src="@{/js/html5.min.js}"></script>
+    <script src="../../../static/js/respond.min.js" th:src="@{/js/respond.min.js}"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="x-nav">
+          <span class="layui-breadcrumb">
+            <a href="">首页</a>
+            <a href="">轮播图管理</a>
+            <a>
+              <cite>轮播图列表</cite></a>
+          </span>
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
+       onclick="parent.location.reload()" title="刷新">
+        <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i></a>
+</div>
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body ">
+                    <form class="layui-form layui-col-space5">
+                        <div class="layui-inline layui-show-xs-block">
+                            <input class="layui-input" autocomplete="off" placeholder="开始时间" name="start" id="start">
+                        </div>
+                        <div class="layui-inline layui-show-xs-block">
+                            <input class="layui-input" autocomplete="off" placeholder="截止时间" name="end" id="end">
+                        </div>
+                        <div class="layui-inline layui-show-xs-block">
+                            <input type="text" name="username" placeholder="请输入标签名" autocomplete="off"
+                                   class="layui-input">
+                        </div>
+                        <div class="layui-inline layui-show-xs-block">
+                            <button class="layui-btn" lay-submit="" lay-filter="sreach"><i
+                                    class="layui-icon">&#xe615;</i></button>
+                        </div>
+                    </form>
+                </div>
+                <div class="layui-card-header">
+                    <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除
+                    </button>
+                    <button class="layui-btn" onclick="xadmin.open('新建标签','create-label',600,400)">
+                        <i
+                                class="layui-icon"></i>新建
+                    </button>
+                </div>
+                <div id="table-list" class="layui-card-body layui-table-body layui-table-main">
+                    <table class="layui-table layui-form">
+                        <thead>
+                        <tr>
+                            <th style="padding-left: 15px;min-width: 8px;width: 8px;">
+                                <input type="checkbox" lay-filter="checkall" name="" lay-skin="primary">
+                            </th>
+                            <th style="width: 25px;min-width: 25px;">编号</th>
+                            <th>标签名</th>
+                            <th style="width: 170px;min-width: 170px;">修改时间</th>
+                            <th>描述</th>
+                            <th style="width: 30px;min-width: 30px;">状态</th>
+                            <th style="width: 65px;min-width: 65px;">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!--<tr th:each="label,stat : ${labels.content}">
+                            <td style="padding-left: 15px;min-width: 8px;width: 8px;">
+                                <input type="checkbox" name="id" value="1" lay-skin="primary">
+                            </td>
+                            <td style="width: 25px;min-width: 25px;" th:text="${label.id}">1</td>
+                            <td th:text="${label.name}">小明</td>
+                            <td style="width: 170px;min-width: 170px;" th:text="${#dates.format(label.updateTime,'yyyy-MM-dd HH:mm:ss')}">13000000000</td>
+                            <td th:text="${label.info}">男</td>
+                            <td style="width: 30px;min-width: 30px;" class="td-status"
+                                th:attr="data-value=${label.status}">
+                                <span class="layui-btn layui-btn-normal layui-btn-mini"
+                                      th:if="${label.status} == 1">已启用</span>
+                                <span class="layui-btn layui-btn-danger layui-btn-mini"
+                                      th:if="${label.status} == 0">已禁用</span>
+                            </td>
+                            <td style="width: 65px;min-width: 65px;" class="td-manage">
+                                <a onclick="statusLabel(this)" href="javascript:;"
+                                   th:attr="data-status=${label.status},data-id=${label.id}" title="启用"
+                                   th:title="${label.status} == 1?'禁用':'启用'">
+                                    <i class="layui-icon">&#xe601;</i>
+                                </a>
+                                <a title="编辑" th:attr="data-id=${label.id}"
+                                   onclick="editLabel(this,'编辑标签','update/',600,400)"
+                                   href="javascript:;">
+                                    <i class="layui-icon">&#xe642;</i>
+                                </a>
+                                <a title="删除" onclick="delLabel(this)" th:attr="data-id=${label.id}"
+                                   href="javascript:;">
+                                    <i class="layui-icon">&#xe640;</i>
+                                </a>
+                            </td>
+                        </tr>-->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="layui-card-body ">
+                    <div class="page">
+                        <div class="m-flex" th:if="${labels.totalPages} > 1">
+                            <a class="prev" th:href="@{/admin/labels/list(page=${labels.number}-1)}"
+                               th:unless="${labels.first} == true">上一页</a>
+                            <a class="prev" href="javascript:;" style="cursor: not-allowed;"
+                               th:unless="${labels.first} == false">上一页</a>
+                            <a class="next" th:href="@{/admin/labels/list(page=${labels.number}+1)}"
+                               th:unless="${labels.last} == true">下一页</a>
+                            <a class="next" href="javascript:;" style="cursor: not-allowed;"
+                               th:unless="${labels.last} == false">下一页</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.use(['laydate', 'form'], function () {
+        var laydate = layui.laydate;
+        var form = layui.form;
+
+        function msg_alert(sessionName, msg, ok_no) {
+            let SUCCESS = sessionStorage.getItem(sessionName);
+            if (SUCCESS != null && SUCCESS == "OK") {
+                layer.msg(msg, {offset: "30px", skin: ok_no, time: 1000})
+                sessionStorage.removeItem(sessionName);
+            }
+        }
+
+        //消息弹窗
+        msg_alert("LIST_STATUS", "添加成功", "success");//标签列表
+        msg_alert("DELETE_SUCCESS", "删除成功", "success");//删除成功
+        msg_alert("LABEL_EDIT_SUCCESS", "修改成功", "success");//修改成功
+        // 监听全选
+        form.on('checkbox(checkall)', function (data) {
+            if (data.elem.checked) {
+                $('tbody input').prop('checked', true);
+            } else {
+                $('tbody input').prop('checked', false);
+            }
+            form.render('checkbox');
+        });
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#start' //指定元素
+        });
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#end' //指定元素
+        });
+
+
+    });
+
+    /*标签-禁用/启用*/
+    function statusLabel(obj) {
+        layer.confirm('确认要' + $(obj).attr('title') + '吗？', function (index) {
+            if ($(obj).attr('title') == '禁用') {
+                $(obj).attr('title', '启用');
+                $(obj).find('i').html('&#xe62f;');
+                $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-danger').html('已禁用');
+                layer.msg('已禁用', {offset: "30px", skin: "success", time: 1000});
+            } else {
+                $(obj).attr('title', '禁用')
+                $(obj).find('i').html('&#xe601;');
+                $(obj).parents("tr").find(".td-status").find('span').removeClass('layui-btn-danger').html('已启用');
+                $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-normal').html('已启用');
+                layer.msg('已启用', {offset: "30px", skin: "success", time: 1000});
+            }
+            //发异步把用户状态进行更改
+            $.ajax({
+                url: "update",
+                data: {
+                    id: $(obj).attr("data-id"),
+                    status: $(obj).attr("data-status")
+                },
+                success: function (res) {
+                    if (res === "DELETE_SUCCESS") {
+                        sessionStorage.setItem("DELETE_SUCCESS", "OK");
+                        window.location.href = "list";
+                        $(obj).parent("tr").parent("td").val();
+                        $(obj).parents("tr").remove();
+                    }
+                }
+            });
+        });
+    }
+
+    /*标签-删除*/
+    function delLabel(obj) {
+        let id = $(obj).attr("data-id");
+        layer.confirm('确认要删除吗？', function (index) {
+            //发异步删除数据
+            $.ajax({
+                url: "del/" + id,
+                success: function (res) {
+                    if (res === "DELETE_SUCCESS") {
+                        sessionStorage.setItem("DELETE_SUCCESS", "OK");
+                        window.location.href = "list";
+                        $(obj).parent("tr").parent("td").val();
+                        $(obj).parents("tr").remove();
+                    }
+                }
+            });
+        });
+    }
+
+    /*标签-编辑*/
+    function editLabel(obj, title, url, w, h, full) {
+        if (title == null || title == '') {
+            title = false;
+        }
+        if (url == null || url == '') {
+            url = "404.html";
+        }
+        if (w == null || w == '') {
+            w = ($(window).width() * 0.9);
+        }
+        if (h == null || h == '') {
+            h = ($(window).height() - 50);
+        }
+        var index = layer.open({
+            type: 2,
+            area: [w + 'px', h + 'px'],
+            fix: false, //不固定
+            maxmin: true,
+            shadeClose: true,
+            shade: 0.4,
+            title: title,
+            content: url + $(obj).attr("data-id")
+        });
+        if (full) {//全屏
+            layer.full(index);
+        }
+    }
+
+    function delAll(argument) {
+        var ids = [];
+
+        // 获取选中的id
+        $('tbody input').each(function (index, el) {
+            if ($(this).prop('checked')) {
+                ids.push($(this).val())
+            }
+        });
+
+        layer.confirm('确认要删除吗？' + ids.toString(), function (index) {
+            //捉到所有被选中的，发异步进行删除
+            layer.msg('删除成功', {icon: 1});
+            $(".layui-form-checked").not('.header').parents('tr').remove();
+        });
+    }
+</script>
+</body>
+</html>

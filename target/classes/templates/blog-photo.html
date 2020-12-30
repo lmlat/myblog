@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/blog-fragments :: head(~{::title})">
+    <meta charset="UTF-8">
+    <title>相册 | 嘟嘟小梦</title>
+    <link href="../static/images/logo.png" rel="icon" type="image/x-ico">
+    <link rel="stylesheet" href="../static/css/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/animate.css">
+    <link rel="stylesheet" href="../static/lib/snow/snow.css">
+    <link rel="stylesheet" href="../static/lib/fancybox/jquery.fancybox.css">
+    <link rel="stylesheet" href="../static/lib/fancybox/jquery.fancybox-thumbs.css">
+    <link rel="stylesheet" href="../static/css/blog/global.css">
+    <link rel="stylesheet" href="../static/css/blog/blog-photo.css">
+</head>
+<body class="m-blog-main-bg">
+<!--雪花-->
+<div class="snow" th:replace="fragments/blog-fragments :: snow"></div>
+<!--头部-->
+<header th:replace="fragments/blog-fragments :: header_menu(5)" id="header"
+        class="ui inverted attached segment m-pt-pb m-bg-transparent m-border-transparent">
+    <div class="ui container">
+        <div class="ui inverted stackable secondary menu">
+            <h2 class="ui header item">DoraeLamon</h2>
+            <a href="" class="m-mobile-item item m-mobile-hide"><i class="home icon"></i>首页</a>
+            <a href="" class="m-mobile-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
+            <a href="" class="m-mobile-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
+            <a href="" class="m-mobile-item item m-mobile-hide"><i class="archive icon"></i>归档</a>
+            <a href="" class="m-mobile-item item m-mobile-hide"><i class="file image icon"></i>个人相册</a>
+            <a href="" class="m-mobile-item item m-mobile-hide"><i class="comments icon"></i>留言板</a>
+            <a href="" class="m-mobile-item item m-mobile-hide"><i class="info icon"></i>关于我</a>
+            <div class="m-mobile-item item ui right inverted input large icon transparent center aligned m-mobile-hide">
+                <input type="text" placeholder="Search...">
+                <i class="search icon link"></i>
+            </div>
+        </div>
+    </div>
+    <a href="javascript:;" id="m-mobile-btn" class="ui button black icon m-mobile-show"
+       style="position: absolute;top: 1em;right: 0;">
+        <i class="sidebar icon"></i>
+    </a>
+</header>
+<!--背景图-->
+<div id="blog-bg" class="ui fluid container photo">
+    <h1 class="ui header animated fadeInUp blog-title m-position-absolute-center" th:text="${album.name}">相册名</h1>
+    <img src="../static/images/banner/4.jpg" th:src="@{${album.url}}" alt="" class="ui fluid image">
+</div>
+
+<!--内容部分-->
+<div id="blog-body" class="animated fadeIn m-margin-top-1em">
+    <div class="ui container center aligned" style="margin: 0 auto;">
+        <!--个人相册下的照片-->
+        <div class="ui horizontal middle aligned images blog-photo-images m-display-flex"
+             style="justify-content: start;flex-wrap:wrap;">
+            <a th:each="photo : ${photos}"
+               class="blog-photo-link-image fancybox photos" data-fancybox-group="group" th:href="@{${photo.url}}"
+               href="../static/images/288156.jpg">
+                <img src="../static/images/288156.jpg" alt=""
+                     class="ui image photo" th:src="@{${photo.url}}"></a>
+            <!--/*-->
+            <a class="blog-photo-link-image fancybox photos" data-fancybox-group="group"
+               th:href="@{/images/backimg1.jpg}"
+               href="../static/images/backimg1.jpg">
+                <img src="../static/images/backimg1.jpg" alt=""
+                     class="ui image bordered photo" th:src="@{/images/backimg1.jpg}"></a>
+            <a class="blog-photo-link-image fancybox photos" data-fancybox-group="group"
+               th:href="@{/images/252596.jpg}"
+               href="../static/images/252596.jpg">
+                <img src="../static/images/252596.jpg" alt=""
+                     class="ui image bordered photo" th:src="@{/images/252596.jpg}"></a>
+            <a class="blog-photo-link-image fancybox photos" data-fancybox-group="group" th:href="@{/images/404.jpg}"
+               href="../static/images/404.jpg">
+                <img src="../static/images/404.jpg" alt=""
+                     class="ui image bordered photo" th:src="@{/images/404.jpg}"></a>
+            <!--*/-->
+        </div>
+    </div>
+</div>
+<!--尾部-->
+<footer class="ui segment vertical inverted m-padding-5 m-bg-blog m-opacity"
+        th:replace="fragments/blog-fragments :: footer">
+    <div class="ui container center aligned">
+        <!--格子布局占16份-->
+        <div class="ui grid divided inverted center aligned stackable">
+            <!--占3列-->
+            <div class="five wide column">
+                <div class="ui list link inverted">
+                    <h4 class="ui inverted header">联系我</h4>
+                    <a href="javascript:;" class="item"><span>Email:</span>1003448731@qq.com</a>
+                    <a href="javascript:;" class="item"><span>QQ:</span>1003448731</a>
+                    <a href="javascript:;" class="item"><span>WX:</span>tg98589</a>
+                    <a href="javascript:;" class="item"><span>博客园:</span>tg98589</a>
+                    <a href="https://blog.csdn.net/qq100344" target="_blank"
+                       class="item m-one-ellipsis"><span>CSDN:</span>https://blog.csdn.net/qq100344</a>
+                </div>
+            </div>
+            <div class="four wide column vertical">
+                <div class="ui list link inverted">
+                    <h4 class="ui inverted header">最新博客</h4>
+                    <a href="#" class="item m-one-ellipsis">第一篇博客第一篇博客第一篇博客第一篇博客</a>
+                    <a href="#" class="item m-one-ellipsis">第二篇博客第二篇博客第二篇博客第二篇博客</a>
+                    <a href="#" class="item m-one-ellipsis">第三篇博客第三篇博客第三篇博客第三篇博客</a>
+                    <a href="#" class="item m-one-ellipsis">第四篇博客第四篇博客第四篇博客第四篇博客</a>
+                    <a href="#" class="item m-one-ellipsis">第五篇博客第五篇博客第五篇博客第五篇博客</a>
+                </div>
+            </div>
+
+            <div class="three wide column center aligned vertical">
+                <div class="ui list link inverted">
+                    <h4 class="ui header  inverted">统计数据</h4>
+                    <a href="javascript:;" class="item"><span>文章总数:&nbsp;&nbsp;</span><span
+                            class="ui header basic orange"
+                            style="display: inline-block;">45</span>&nbsp;&nbsp;篇<span></span></a>
+                    <a href="javascript:;" class="item"><span>访问总数:&nbsp;&nbsp;</span><span
+                            class="ui header basic orange"
+                            style="display: inline-block;">65</span><span>&nbsp;&nbsp;次</span></a>
+                    <a href="javascript:;" class="item"><span>评论总数:&nbsp;&nbsp;</span><span
+                            class="ui header basic orange"
+                            style="display: inline-block;">24</span><span>&nbsp;&nbsp;条</span></a>
+                    <a href="javascript:;" class="item"><span>留言总数:&nbsp;&nbsp;</span><span
+                            class="ui header basic orange"
+                            style="display: inline-block;">78</span><span>&nbsp;&nbsp;条</span></a>
+                </div>
+            </div>
+            <!--占3列-->
+            <div class="four wide column center aligned vertical">
+                <h4 class="ui header inverted">关注我</h4>
+                <img src="../static/images/tg98589.png" alt="" class="ui image rounded middle aligned"
+                     style="width: 120px;height: 120px;">
+            </div>
+        </div>
+        <div class="ui section divider inverted"></div>
+        <p class="m-letter-spacing-opacity-8">Copyright © 2020 哆啦A梦--蓝胖子</p>
+    </div>
+</footer>
+<script src="../static/js/jquery-min-3.4.1.js" th:src="@{/js/jquery-min-3.4.1.js}"></script>
+<script src="../static/lib/snow/snow.min.js" th:src="@{/lib/snow/snow.min.js}"></script>
+<script src="../static/js/semantic.min.js" th:src="@{/js/semantic.min.js}"></script>
+<script src="../static/lib/fancybox/jquery.fancybox.js" th:src="@{/lib/fancybox/jquery.fancybox.js}"></script>
+<script src="../static/lib/fancybox/jquery.fancybox-thumbs.js"
+        th:src="@{/lib/fancybox/jquery.fancybox-thumbs.js}"></script>
+<script src="../static/lib/fancybox/jquery.mousewheel.pack.js"
+        th:src="@{/lib/fancybox/jquery.mousewheel.pack.js}"></script>
+<script src="../static/js/blog/global.js" th:src="@{/js/blog/global.js}"></script>
+<script src="../static/lib/scrollreveal/scrollreveal.min.js"
+        th:src="@{/lib/scrollreveal/scrollreveal.min.js}"></script>
+<script>
+    //加载滚动插件
+    let sr = ScrollReveal({
+        reset: true // 修改默认配置
+    });
+
+    // 自定义一个动画集合
+    sr.reveal('.photos:nth-child(even)', {
+        duration: 600,
+        origin: 'bottom',
+        opacity: 0,
+        delay: 0,
+        easing: 'cubic-bezier(0.6, 0.2, 0.1, 1)',
+        mobile: true,
+        useDelay: 'always',
+        viewFactor: 0.2,
+        viewOffset: {
+            top: 10,
+            right: 5,
+            bottom: 5,
+            left: 0
+        }
+    });
+    sr.reveal('.photos:nth-child(odd)', {
+        duration: 400,
+        origin: 'right',
+        easing: 'ease-out'
+    });
+    $(function () {
+        $(".fancybox").fancybox({
+            //设置相应事件（左边从上到下依次是打开、关闭、下一个、上一个）的动画效果。可选 'elastic'、 'fade' 或 'none'。
+            openEffect: 'elastic',
+            closeEffect: 'elastic',
+            nextEffect: 'elastic',
+            prevEffect: 'elastic',
+            hideOnOverlayClick: false,
+            mouseWheel: true,
+            mobile: true,
+            maxWidth: 1280,
+            helpers: {
+                //图片标题的显示方式
+                title: {type: 'inside'},
+                overlay: {
+                    css: {
+                        'background': 'rgba(39,40,34,0.7)' //添加遮罩
+                    }
+                },
+                thumbs: {
+                    width: 75,
+                    height: 50
+                }
+            },
+            beforeShow: function () {
+                this.title = ' <a target="_blank" href="' + this.href + '">' + (this.title ? '' + this.title + '' : '') + '</a>  ' + (this.index + 1) + '/' + this.group.length;
+            }
+        });
+    });
+</script>
+</body>
+</html>

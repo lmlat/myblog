@@ -1,0 +1,113 @@
+body.login-body {
+    overflow-y: scroll;
+    background:url('../../images/bg.gif') repeat;
+}
+
+.box {
+    position: relative;
+    left: calc(10%);
+    top: 100px;
+    width: 500px;
+}
+
+.logo {
+    position: absolute;
+    left: 30px;
+    top: 30px;
+}
+
+.content {
+    position: absolute;
+    left: calc(50%);
+    top: 90px;
+    color: #fff !important;
+    cursor: pointer;
+    text-align: center;
+    line-height: 1.2;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    padding: 20px;
+}
+
+.content > a {
+    display: inline-block;
+    color: #fff;
+    font-size: 35px !important;
+    font-weight: bold !important;
+}
+
+.content > a > h1 {
+    font-weight: bold !important;
+}
+
+.content > p {
+    margin-top: 20px;
+    font-weight: 700;
+    font-size: 25px;
+}
+
+.enter {
+    width: 370px;
+    height: 408px;
+    background: #fff;
+    float: right;
+    margin: 120px 150px 0 0;
+}
+.email-enter{
+    width: 370px;
+    height: 320px;
+    background: #fff;
+    float: right;
+    margin: 120px 150px 0 0;
+}
+.leave {
+    width: 370px;
+    height: 558px;
+    background: #fff;
+    float: right;
+    margin: 120px 150px 0 0;
+}
+
+.login {
+    height: 350px;
+}
+.email-login{
+    height: 275px;
+}
+.register {
+    height: 550px;
+}
+
+/*layui*/
+.layui-tab-brief > .layui-tab-title .layui-this {
+    color: #1E9FFF;
+}
+
+.layui-tab-brief > .layui-tab-more li.layui-this:after, .layui-tab-brief > .layui-tab-title .layui-this:after {
+    border-bottom: 2px solid #1E9FFF;
+}
+
+.layui-form-label {
+    width: 150px;
+    text-align: left;
+}
+
+.layui-input, .layui-textarea {
+    width: 320px;
+    margin-left: -95px;
+}
+
+.layui-tab-title li {
+    width: 185px;
+}
+
+.layui-input:focus {
+    border: 1px solid #1E9FFF !important;
+}
+
+.layui-layer-hui {
+    background: #f0f9eb !important;
+    color: #67c23a !important;
+}

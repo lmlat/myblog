@@ -1,0 +1,59 @@
+.photo#blog-bg {
+    height: 350px;
+    position: relative;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    margin: 0 !important;
+}
+
+.photo#blog-bg > img {
+    height: 350px;
+}
+
+/*博客标题*/
+.blog-title {
+    bottom: 1em !important;
+    z-index: 300 !important;
+    font-size: 3rem !important;
+    font-weight: 400 !important;
+    color: #eee !important;
+    text-align: center !important;
+}
+
+/*#blog-body{
+    margin-top: 7.15em !important;
+}*/
+.blog-photo-images {
+    width: 100%;
+}
+
+.blog-photo-images img {
+    width: 360px !important;
+    height: 250px !important;
+}
+
+.blog-photo-link-image {
+    display: inline-block;
+    transition: 1s !important;
+}
+
+.blog-photo-link-image:hover {
+    transform: scale(1.05) !important;
+    transition: 1s !important;
+}
+
+.m-b-c {
+    background: #fff !important;
+    border-radius: 10px !important;
+}
+
+.m-m-p {
+    padding: 15px !important;
+    margin: 0 !important;
+}
+
+.m-margin-r-5 {
+    margin-right: 8px !important;
+    margin-bottom: 8px !important;
+}

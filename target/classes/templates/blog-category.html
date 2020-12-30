@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/xhtml"
+      xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head th:replace="fragments/blog-fragments :: head(~{::title})">
+    <meta charset="UTF-8">
+    <title>分类 | 嘟嘟小梦</title>
+    <link href="../static/images/logo.png" rel="icon" type="image/x-ico">
+    <link rel="stylesheet" href="../static/css/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/animate.css">
+    <link rel="stylesheet" href="../static/lib/snow/snow.css">
+    <link rel="stylesheet" href="../static/css/blog/global.css">
+    <link rel="stylesheet" href="../static/css/blog/blog-label.css">
+    <style>
+        [v-clock]:not(body) {
+            display: none;
+        }
+    </style>
+</head>
+<body class="m-blog-main-bg">
+<!--雪花-->
+<div class="snow" th:replace="fragments/blog-fragments :: snow"></div>
+<!--头部-->
+<header id="header" th:replace="fragments/blog-fragments :: header_menu(3)"
+        class="ui inverted attached segment m-pt-pb m-bg-transparent m-border-transparent">
+    <div class="ui container">
+        <div class="ui inverted stackable secondary menu">
+            <h2 class="ui header item">DoraeLamon</h2>
+            <a href="" class="m-mobile-item item m-mobile-hide"><i class="home icon"></i>首页</a>
+            <a href="" class="m-mobile-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
+            <a href="" class="m-mobile-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
+            <a href="" class="m-mobile-item item m-mobile-hide"><i class="archive icon"></i>归档</a>
+            <a href="" class="m-mobile-item item m-mobile-hide"><i class="file image icon"></i>个人相册</a>
+            <a href="" class="m-mobile-item item m-mobile-hide"><i class="comments icon"></i>留言板</a>
+            <a href="" class="m-mobile-item item m-mobile-hide"><i class="info icon"></i>关于我</a>
+            <div class="m-mobile-item item ui right inverted input large icon transparent center aligned m-mobile-hide">
+                <input type="text" placeholder="Search...">
+                <i class="search icon link"></i>
+            </div>
+        </div>
+    </div>
+    <a href="javascript:;" id="m-mobile-btn" class="ui button black icon m-mobile-show"
+       style="position: absolute;top: 1em;right: 0;">
+        <i class="sidebar icon"></i>
+    </a>
+</header>
+<!--背景图-->
+<div id="blog-bg" class="ui fluid container" v-clock>
+    <h1 class="ui header blog-title m-position-absolute-center animated fadeInUp">
+        写代码是热爱，写到世界充满爱！
+    </h1>
+    <img src="../static/images/banner/4.jpg" th:src="@{https://lml-bucket.oss-cn-beijing.aliyuncs.com/blog-background/1001574.jpg}" alt="" class="ui fluid image">
+</div>
+<!--内容部分-->
+<div class="blog-category" id="blog-body">
+    <div class="ui container">
+        <!--博客内容部分-->
+        <div class="ui segments" v-clock>
+            <div class="ui segment center aligned">
+                <h2 class="ui header" style="font:400 2em '';color:#34495e;"><i class="bookmark icon"
+                                                                                style="font-size:1em"></i>文章分类
+                </h2>
+            </div>
+            <!--数据为空时显示该区域内容-->
+            <div class="ui segment flowing center aligned" th:if="${categorys.size()} <= 0">
+                <img src="../static/images/404.png" th:src="@{/images/404.png}" alt=""
+                     class="ui avatar tiny image m-opacity">
+                <h3 class="ui header m-opacity">很遗憾,没有找到多余的数据~_~</h3>
+            </div>
+            <!--所有博客标签-->
+            <div class="ui segment" th:if="${categorys.size()} > 0">
+                <div class="category blog-all-label">
+                    <span th:each="category,stat : ${categorys}" th:object="${category}"
+                          th:if="${category.blogs.size()} > 0"
+                          th:attr="data-id=*{id}" v-on:click.stop.prevent="setCategoryEvents($event)"
+                          class="chip center-align waves-effect m-margin-r-2em blog-one-label">
+                        <span th:text="*{name}">SpringBoot</span>
+                        <span class="tag-length"
+                              th:text="*{blogs.size()}">3</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <!--每类文章数据统计-->
+        <div class="ui segment padded center aligned" v-show="!isShow">
+            <div id="blog-category-chart"></div>
+        </div>
+        <!--每种分类的博客数据-->
+        <div id="blog-category-cards" class="ui segment vertical padded" style="min-height:345px;" v-show="isShow">
+            <div class="ui cards">
+                <transition v-for="(blog,index) in blogs" enter-active-class="bounceInUp"
+                            leave-active-class="bounceOut"
+                            :duration="{enter:400,leave:400}" v-bind:key="index" v-clock>
+                    <div class="ui card m-blog-label-card animated bounceInUp">
+                        <a href="" class="image" v-on:click.stop.prevent="lookBlog($event)" :data-id="blog.id" :data-title="blog.title">
+                            <h2 class="ui header m-one-ellipsis m-padding-1"
+                                style="position: absolute;bottom: 0;left: 0;width: 300px;font: 400 22px '';color:#fff"
+                                v-text="blog.title"></h2>
+                            <img v-bind:src="blog.bgImage"
+                                 style="height:200px;width:100%;" alt="">
+                        </a>
+                        <div class="content" style="padding-bottom:6px;color: #34495e;">
+                            <div class="m-more-ellipsis" style="font-size:15px;margin-bottom:6px;"
+                                 v-text="blog.keyword">
+                            </div>
+                            <span class="right floated">
+                          <i class="bookmark icon"></i>
+                          <a href="#" class="m-c-inherit" v-bind:title="blog.category.name"
+                             v-bind:href="'/category?categoryId='+blog.category.id" v-text="blog.category.name"></a>
+                        </span>
+                            <i class="clock outline icon"></i>
+                            <span v-text="blog.updateTime"></span>
+                        </div>
+                    </div>
+                </transition>
+            </div>
+        </div>
+    </div>
+</div>
+<!--尾部-->
+<footer class="ui segment vertical inverted m-padding-5 m-bg-blog m-opacity"
+        th:replace="fragments/blog-fragments :: footer">
+    <div class="ui container center aligned">
+        <!--格子布局占16份-->
+        <div class="ui grid divided inverted center aligned stackable">
+            <!--占3列-->
+            <div class="five wide column">
+                <div class="ui list link inverted">
+                    <h4 class="ui inverted header">联系我</h4>
+                    <a href="javascript:;" class="item"><span>Email:</span>1003448731@qq.com</a>
+                    <a href="javascript:;" class="item"><span>QQ:</span>1003448731</a>
+                    <a href="javascript:;" class="item"><span>WX:</span>tg98589</a>
+                    <a href="javascript:;" class="item"><span>博客园:</span>tg98589</a>
+                    <a href="https://blog.csdn.net/qq100344" target="_blank"
+                       class="item m-one-ellipsis"><span>CSDN:</span>https://blog.csdn.net/qq100344</a>
+                </div>
+            </div>
+            <div class="four wide column vertical">
+                <div class="ui list link inverted">
+                    <h4 class="ui inverted header">最新博客</h4>
+                    <a href="#" class="item m-one-ellipsis">第一篇博客第一篇博客第一篇博客第一篇博客</a>
+                    <a href="#" class="item m-one-ellipsis">第二篇博客第二篇博客第二篇博客第二篇博客</a>
+                    <a href="#" class="item m-one-ellipsis">第三篇博客第三篇博客第三篇博客第三篇博客</a>
+                    <a href="#" class="item m-one-ellipsis">第四篇博客第四篇博客第四篇博客第四篇博客</a>
+                    <a href="#" class="item m-one-ellipsis">第五篇博客第五篇博客第五篇博客第五篇博客</a>
+                </div>
+            </div>
+
+            <div class="three wide column center aligned vertical">
+                <div class="ui list link inverted">
+                    <h4 class="ui header  inverted">统计数据</h4>
+                    <a href="javascript:;" class="item"><span>文章总数:&nbsp;&nbsp;</span><span
+                            class="ui header basic orange"
+                            style="display: inline-block;">45</span>&nbsp;&nbsp;篇<span></span></a>
+                    <a href="javascript:;" class="item"><span>访问总数:&nbsp;&nbsp;</span><span
+                            class="ui header basic orange"
+                            style="display: inline-block;">65</span><span>&nbsp;&nbsp;次</span></a>
+                    <a href="javascript:;" class="item"><span>评论总数:&nbsp;&nbsp;</span><span
+                            class="ui header basic orange"
+                            style="display: inline-block;">24</span><span>&nbsp;&nbsp;条</span></a>
+                    <a href="javascript:;" class="item"><span>留言总数:&nbsp;&nbsp;</span><span
+                            class="ui header basic orange"
+                            style="display: inline-block;">78</span><span>&nbsp;&nbsp;条</span></a>
+                </div>
+            </div>
+            <!--占3列-->
+            <div class="four wide column center aligned vertical">
+                <h4 class="ui header inverted">关注我</h4>
+                <img src="" alt="" class="ui image rounded middle aligned"
+                     style="width: 120px;height: 120px;">
+            </div>
+        </div>
+        <div class="ui section divider inverted"></div>
+        <p class="m-letter-spacing-opacity-8">Copyright © 2020 哆啦A梦--蓝胖子</p>
+    </div>
+</footer>
+<input type="hidden" class="category-id" th:value="${categoryId}"/>
+<!--/*/<th:block th:replace="fragments/blog-fragments :: script">/*/-->
+<script src="../static/js/jquery-min-3.4.1.js" th:src="@{/js/jquery-min-3.4.1.js}"></script>
+<script src="../static/js/semantic.min.js" th:src="@{/js/semantic.min.js}"></script>
+<script src="../static/lib/snow/snow.min.js" th:src="@{/lib/snow/snow.min.js}"></script>
+<script src="../static/lib/wow/wow.min.js" th:src="@{/lib/wow/wow.min.js}"></script>
+<script src="../static/js/blog/global.js" th:src="@{/js/blog/global.js}"></script>
+<!--/*/</th:block>/*/-->
+<script src="../static/js/echarts.min.js" th:src="@{/js/echarts.min.js}"></script>
+<script th:inline="javascript">
+    let vm = new Vue({
+        el: ".blog-category#blog-body",
+        data: {
+            categoryId: "",
+            blogs: [],
+            isShow: false,
+            names: [],
+            data: []
+        },
+        mounted() {
+            this.getChart('#blog-category-chart');
+            let category_id = $(".category-id");
+            if (category_id != null && category_id.val() != "") {
+                this.select($(".chip[data-id=" + category_id.val() + "]"));
+                this.getData();
+            }
+        },
+        methods: {
+            setCategoryEvents: function (obj) {
+                console.log(obj.currentTarget);//获取$event当前DOM对象
+                let _this = $(obj.currentTarget);
+                this.select(_this);
+                this.getData();
+            },
+            lookBlog: function (obj) {
+                let _this = $(obj.currentTarget);
+                window.open("/detailed/" + _this.attr("data-id") + "/" + _this.attr("data-title"));
+            },
+            select: function (obj) {
+                this.categoryId = obj.attr("data-id");
+                this.isShow = true;
+                obj.addClass("tag-selected");
+                obj.siblings().removeClass("tag-selected");
+                obj.children("span").eq(1).addClass("tag-checked");
+                obj.siblings().children("span").removeClass("tag-checked");
+            },
+            isEmpty: function (obj) {
+                if (obj != undefined || obj != null) {
+                    return false;
+                }
+                return true;
+            },
+            async getData() {
+                if (!this.isEmpty(this.categoryId)) {
+                    let result = await axios.get("category/select/" + this.categoryId, {});
+                    this.blogs = result.data.message;
+                    if (!this.isEmpty(this.blogs)) {
+                        for (let blog of this.blogs) {
+                            blog.updateTime = new Date(blog.updateTime).toLocaleDateWeekTime();
+                        }
+                    }
+                }
+                console.log("blogs:", this.blogs);
+            },
+            getChart: function (selector) {
+                let categorys = $(".category .chip");
+                for (let i = 0; i < categorys.length; i++) {
+                    let content = categorys[i].outerText.split(" ");
+                    let temp = {
+                        value: content[1],
+                        name: content[0]
+                    };
+                    this.names[i] = content[0];
+                    this.data[i] = temp;
+                }
+
+                // 1、初始化echarts实例
+                let myChart = echarts.init(document.querySelector(selector));
+                // 2、指定图表的配置项和数据
+                var option = {
+                    title: {
+                        text: '文章分类饼图',
+                        left: 'center'
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: '{a} <br/>{b} : {c} ({d}%)'
+                    },
+                    legend: {
+                        bottom: 10,
+                        left: 'center',
+                        data: this.names
+                    },
+                    series: [
+                        {
+                            type: 'pie',
+                            radius: '65%',
+                            center: ['50%', '50%'],
+                            selectedMode: 'single',
+                            data: this.data,
+                            emphasis: {
+                                itemStyle: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
+                        }
+                    ]
+                };
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
+            }
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>全部文章</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>
+    <link rel="stylesheet" href="../../../static/css/admin/font.css" th:href="@{/css/admin/font.css}">
+    <link rel="stylesheet" href="../../../static/css/admin/xadmin.css" th:href="@{/css/admin/xadmin.css}">
+    <script src="../../../static/lib/layui/layui.js" charset="utf-8" th:src="@{/lib/layui/layui.js}"></script>
+    <script type="text/javascript" src="../../../static/js/xadmin.js" th:src="@{/js/xadmin.js}"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+    <script src="../../../static/js/html5.min.js" th:src="@{/js/html5.min.js}"></script>
+    <script src="../../../static/js/respond.min.js" th:src="@{/js/respond.min.js}"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="x-nav">
+          <span class="layui-breadcrumb">
+            <a href="">首页</a>
+            <a href="">分类管理</a>
+            <a>
+              <cite>分类列表</cite></a>
+          </span>
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
+       onclick="parent.location.reload()" title="刷新">
+        <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i></a>
+</div>
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body ">
+                    <form class="layui-form layui-col-space5">
+                        <div class="layui-inline layui-show-xs-block">
+                            <input class="layui-input" autocomplete="off" placeholder="开始时间" name="start" id="start">
+                        </div>
+                        <div class="layui-inline layui-show-xs-block">
+                            <input class="layui-input" autocomplete="off" placeholder="截止时间" name="end" id="end">
+                        </div>
+                        <div class="layui-inline layui-show-xs-block">
+                            <input type="text" name="username" placeholder="请输入标签名" autocomplete="off"
+                                   class="layui-input">
+                        </div>
+                        <div class="layui-inline layui-show-xs-block">
+                            <button class="layui-btn" lay-submit="" lay-filter="sreach"><i
+                                    class="layui-icon">&#xe615;</i></button>
+                        </div>
+                    </form>
+                </div>
+                <div class="layui-card-header">
+                    <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除
+                    </button>
+                </div>
+                <div class="layui-card-body layui-table-body layui-table-main">
+                    <table class="layui-table layui-form">
+                        <thead>
+                        <tr>
+                            <th style="padding-left: 15px;min-width: 8px;width: 8px;">
+                                <input type="checkbox" lay-filter="checkall" name="" lay-skin="primary">
+                            </th>
+                            <th style="min-width: 25px;width: 25px;">编号</th>
+                            <th>文章标题</th>
+                            <th>文章类型</th>
+                            <th>文章分类</th>
+                            <th>文章标签</th>
+                            <th>修改时间</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="blog : ${blogs}">
+                            <td style="min-width: 8px;width: 8px;">
+                                <input type="checkbox" name="id" value="1" lay-skin="primary">
+                            </td>
+                            <td style="width: 25px;min-width: 25px;" th:text="${blog.id}">文章编号</td>
+                            <td th:text="${blog.title}">文章标题</td>
+                            <td th:text="${blog.flag} == 1 ? '原创' : (${blog.flag} == 2 ? '转载':'翻译')">文章类型</td>
+                            <td><span th:each="c : ${blog.category}">[[${c.name}]]</span></td>
+                            <td><span th:each="c,stat : ${blog.labels}">[[${c.name}]]<span
+                                    th:if="${stat.size != stat.index+1}">,</span></span></td>
+                            <td th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd HH:mm:ss')}">修改时间</td>
+                            <td class="td-status" th:attr="data-value=${blog.status}">
+                                <span class="layui-btn layui-btn-normal layui-btn-mini"
+                                      th:if="${blog.status} == 1">公开</span>
+                                <span class="layui-btn layui-btn-danger layui-btn-mini"
+                                      th:if="${blog.status} == 2">私密</span>
+                                <span class="layui-btn layui-btn-warm layui-btn-mini"
+                                      th:if="${blog.status} == 3">草稿</span>
+                                <span class="layui-btn layui-bg-gray layui-btn-mini"
+                                      th:if="${blog.status} == 4">待回收</span>
+                            </td>
+                            <td>
+                                <a th:if="${blog.status} == 4" onclick="statusBlog(this)" title="启用"
+                                   th:title="${FLAG} == 4?'恢复':'禁用'" href="javascript:;">
+                                    <i class="layui-icon">&#xe601;</i>
+                                </a>
+                                <a th:if="${FLAG} != 4" title="编辑" th:attr="data-id=${blog.id}"
+                                   onclick="editBlog(this,'文章编辑','/edit',600,400,true)" href="javascript:;">
+                                    <i class="layui-icon">&#xe642;</i>
+                                </a>
+                                <a title="删除" onclick="delBlog(this)" href="javascript:;"
+                                   th:attr="data-status=${FLAG},data-id=${blog.id}">
+                                    <i class="layui-icon">&#xe640;</i>
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="layui-card-body ">
+                    <div class="page">
+                        <div class="m-flex" th:if="${blogs.totalPages} > 1">
+                            <a class="prev" th:href="@{/admin/articles/list(FLAG=${FLAG},page=${blogs.number}-1)}"
+                               th:unless="${blogs.first} == true">上一页</a>
+                            <a class="prev" href="javascript:;" style="cursor: not-allowed;"
+                               th:unless="${blogs.first} == false">上一页</a>
+                            <a class="next" th:href="@{/admin/articles/list(FLAG=${FLAG},page=${blogs.number}+1)}"
+                               th:unless="${blogs.last} == true">下一页</a>
+                            <a class="next" href="javascript:;" style="cursor: not-allowed;"
+                               th:unless="${blogs.last} == false">下一页</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use(['laydate', 'form', 'layer'], function () {
+        var laydate = layui.laydate;
+        var form = layui.form;
+        var layer = layui.layer;
+
+        var BLOG_DELETE_SUCCESS = sessionStorage.getItem("BLOG_DELETE_SUCCESS");//标签列表
+        if (BLOG_DELETE_SUCCESS != null && BLOG_DELETE_SUCCESS == "OK") {
+            layer.msg('删除成功', {offset: "30px", skin: "success", time: 1000})
+            sessionStorage.removeItem("BLOG_DELETE_SUCCESS");
+        }
+        // 监听全选
+        form.on('checkbox(checkall)', function (data) {
+
+            if (data.elem.checked) {
+                $('tbody input').prop('checked', true);
+            } else {
+                $('tbody input').prop('checked', false);
+            }
+            form.render('checkbox');
+        });
+
+        //开始时间
+        laydate.render({
+            elem: '#start'
+        });
+
+        //结束时间
+        laydate.render({
+            elem: '#end'
+        });
+
+
+    });
+
+    /*文章-禁用*/
+    function statusBlog(obj) {
+        layer.confirm('确认要' + $(obj).attr('title') + '吗？', function (index) {
+            if ($(obj).attr('title') == '恢复') {
+                $(obj).attr('title', '禁用')
+                $(obj).find('i').html('&#xe62f;');
+                $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-danger').html('已禁用');
+                layer.msg('恢复成功', {offset: "30px", skin: "success", time: 1000});
+            } else {
+                $(obj).attr('title', '恢复');
+                $(obj).find('i').html('&#xe601;');
+                $(obj).parents("tr").find(".td-status").find('span').removeClass('layui-btn-danger').html('已启用');
+                $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-normal').html('已启用');
+                layer.msg('已启用', {offset: "30px", skin: "success", time: 1000});
+            }
+        });
+    }
+
+    /*文章-删除*/
+    function delBlog(obj) {
+        let id = $(obj).attr("data-id");
+        let flag = $(obj).attr("data-status");
+        let msg = "加入回收站",
+            url = "/updateStatus";
+        if (flag == 4) {
+            msg = "删除文章";
+            url = "/del";
+        }
+        layer.confirm('确认要' + msg + '吗？', function (index) {
+            //发异步删除数据
+            $.ajax({
+                url: id+url,
+                method: "post",
+                success: function (res) {
+                    if (res.message === "BLOG_DELETE_SUCCESS") {
+                        sessionStorage.setItem("BLOG_DELETE_SUCCESS", "OK");
+                        $(obj).parent("tr").parent("td").val();
+                        $(obj).parents("tr").remove();
+                        window.location.href = "list?FLAG=" + 4;
+                    }
+                }
+            });
+        });
+    }
+
+    /*文章-编辑*/
+    function editBlog(obj, title, url, w, h, full) {
+        if (title == null || title == '') {
+            title = false;
+        }
+        if (url == null || url == '') {
+            url = "404.html";
+        }
+        if (w == null || w == '') {
+            w = ($(window).width() * 0.9);
+        }
+        if (h == null || h == '') {
+            h = ($(window).height() - 50);
+        }
+        var index = layer.open({
+            type: 2,
+            area: [w + 'px', h + 'px'],
+            fix: false, //不固定
+            maxmin: true,
+            shadeClose: true,
+            shade: 0.4,
+            title: title,
+            content: $(obj).attr("data-id")+url
+        });
+        if (full) {//全屏
+            layer.full(index);
+        }
+    }
+
+    /*文章-批量删除*/
+    function delAll(argument) {
+        var ids = [];
+
+        // 获取选中的id
+        $('tbody input').each(function (index, el) {
+            if ($(this).prop('checked')) {
+                ids.push($(this).val())
+            }
+        });
+
+        layer.confirm('确认要删除吗？' + ids.toString(), function (index) {
+            //捉到所有被选中的，发异步进行删除
+            layer.msg('删除成功', {icon: 1});
+            $(".layui-form-checked").not('.header').parents('tr').remove();
+        });
+    }
+</script>
+</body>
+</html>

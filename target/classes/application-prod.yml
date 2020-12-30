@@ -1,0 +1,19 @@
+spring:
+  profiles: prod
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://112.125.27.159:3307/db_blog?useUnicode=true&characterEncoding=utf-8
+    type: com.alibaba.druid.pool.DruidDataSource
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+logging:
+  level:
+    root: warn
+    com.aitao.myblog: info
+  file:
+    path: log/blog-prod.log
+server:
+  port: 8088

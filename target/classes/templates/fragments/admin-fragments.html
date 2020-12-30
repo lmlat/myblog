@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--管理员后台头部-->
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <title th:replace="${title}">用户列表</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>
+    <link href="static/images/logo.jpg" th:href="@{/static/images/logo2.jpg}" rel="icon" type="image/x-ico">
+    <link rel="stylesheet" href="../../../static/css/admin/font.css" th:href="@{/css/admin/font.css}">
+    <link rel="stylesheet" href="../../../static/css/admin/xadmin.css" th:href="@{/css/admin/xadmin.css}">
+    <script src="../../../static/lib/layui/layui.js" charset="utf-8" th:src="@{/lib/layui/layui.js}"></script>
+    <script type="text/javascript" src="../../../static/js/xadmin.js" th:src="@{/js/xadmin.js}"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+    <script src="../../static/js/html5.min.js" th:src="@{/js/html5.min.js}"></script>
+    <script src="../../static/js/respond.min.js" th:src="@{/js/respond.min.js}"></script>
+    <![endif]-->
+</head>
+<body>
+
+</body>
+</html>

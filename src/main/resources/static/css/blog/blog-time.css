@@ -1,0 +1,185 @@
+.time#blog-bg {
+    height: 350px;
+    position: relative;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    margin: 0 !important;
+}
+
+.time#blog-bg > img {
+    height: 350px;
+    width: 100%;
+}
+
+/*博客标题*/
+.blog-title {
+    bottom: 1em !important;
+    z-index: 300 !important;
+    font-size: 3rem !important;
+    font-weight: 400 !important;
+    color: #eee !important;
+    text-align: center !important;
+}
+
+.m-blog-time-card {
+    width: 340px !important;
+    margin-left: 1.8em !important;
+    transition: 1s !important;
+}
+
+.m-blog-time-card img {
+    width: 340px !important;
+    height: 150px !important;
+}
+
+.m-blog-time-card:hover {
+    transform: scale(1.1) !important;
+    transition: 1s !important;
+}
+
+/*时间线*/
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.timeline ul li {
+    list-style-type: none;
+    position: relative;
+    width: 5px;
+    margin: 0 auto;
+    background: linear-gradient(to right, #55EFCB 0%, #5BCAFF 100%);
+    border-radius: 5px;
+}
+
+.timeline ul li .blog-time-circular {
+    position: absolute;
+    left: -0.9em;
+    bottom: 0;
+    width: 30px;
+    height: 30px;
+    z-index: 2;
+    background: #eee;
+    border-radius: 50%;
+    line-height: 50px;
+    text-align: center;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.timeline ul li:last-child .blog-time-circular {
+    width: 0;
+    height: 0;
+}
+
+.timeline ul li div {
+    position: relative;
+    bottom: 0;
+    width: 500px;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 4px 13px 30px 1px rgba(1, 0, 56, 0.1);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.5s ease-in-out;
+}
+
+.timeline ul li:nth-child(odd) > .blog-time-cards {
+    left: 45px;
+}
+
+.timeline ul li:nth-child(even) > .blog-time-cards {
+    left: -429px;
+}
+
+.timeline ul li:nth-child(odd) div {
+    transform: translate3d(100px, -10px, 0) rotate(10deg);
+}
+
+.timeline ul li:nth-child(even) div {
+    transform: translate3d(-100px, -10px, 0) rotate(-10deg);
+}
+
+.timeline ul li.in-view div {
+    transform: none;
+    visibility: visible;
+    opacity: 1;
+}
+
+/*时间线手机端口布局*/
+@media screen and (max-width: 768px) {
+    .timeline ul li .blog-time-cards {
+        width: 300px;
+        flex-direction: column;
+    }
+
+    .blog-time-cards .content {
+        display: inline-block;
+        width: 300px !important;
+    }
+
+    .blog-time-cards img {
+        width: 300px !important;
+    }
+
+    .blog-time-cards h2 {
+        display: -webkit-box !important;
+        -webkit-box-orient: vertical !important;
+        -webkit-line-clamp: 1 !important;
+        overflow: hidden !important;
+    }
+
+    .m-blog-time-card {
+        margin: 10px !important;
+    }
+
+    /*.timeline ul li .blog-time-cards div {
+        width: 80%;
+        margin: 10px;
+    }*/
+    .timeline ul li:nth-of-type(even) > .blog-time-cards {
+        left: -289px;
+    }
+
+    .timeline ul li {
+        margin-left: 20px;
+    }
+
+    .timeline ul li div {
+        width: calc(100vw - 91px);
+    }
+
+    .time#blog-bg > img {
+        height: 300px !important;
+    }
+
+    .time#blog-bg {
+        height: 300px !important;
+    }
+
+    .blog-time-cards {
+        width: 300px !important;
+    }
+
+    .blog-time-cards .content {
+        display: inline-block;
+        width: 300px !important;
+    }
+
+    .blog-time-cards img {
+        width: 300px !important;
+    }
+
+    .timeline ul li:nth-of-type(even) > .blog-time-cards {
+        left: 45px;
+    }
+}

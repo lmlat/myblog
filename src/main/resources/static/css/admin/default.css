@@ -1,0 +1,62 @@
+/*================css默认样式==================*/
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body, dl, dd, dt, p, h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+}
+
+ol, ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+a {
+    text-decoration: none !important;
+}
+/*================float==================*/
+.fl-l {
+    float: left !important;
+}
+
+.fl-r {
+    float: right !important;
+}
+
+.clearfix {
+    clear: both;
+    content: "";
+    display: block;
+}
+/*================color==================*/
+.c-606266{
+    color: #606266;
+}
+
+
+/*layui错误提示框*/
+.error {
+    color: #f56c6c !important;
+    background-color: #fef0f0 !important;
+    border-color: #fde2e2 !important;
+    height: 50px !important;
+    text-align: center !important;
+}
+
+/*layui成功提示框*/
+.success {
+    border-color: #e1f3d8 !important;
+    background: #f0f9eb !important;
+    color: #67c23a !important;
+    height: 50px !important;
+    text-align: center !important;
+}
+
+/*layui样式覆盖*/
+/*提示框*/
+.layui-layer-dialog .layui-layer-content {
+    padding: 13px 20px !important;
+}

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--头部文件-->
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>
+    <title th:replace="${title}">抽取公共模块</title>
+    <link href="static/images/logo.png" th:href="@{/images/logo.png}" rel="icon" type="image/x-ico">
+    <link rel="stylesheet" href="static/css/semantic.min.css" th:href="@{/css/semantic.min.css}">
+    <link rel="stylesheet" href="static/css/animate.css" th:href="@{/css/animate.css}">
+    <link rel="stylesheet" href="static/css/swiper.min.css" th:href="@{/css/swiper.min.css}">
+    <link rel="stylesheet" href="static/lib/fancybox/jquery.fancybox.css"
+          th:href="@{/lib/fancybox/jquery.fancybox.css}">
+    <link rel="stylesheet" href="static/lib/fancybox/jquery.fancybox-thumbs.css"
+          th:href="@{/lib/fancybox/jquery.fancybox-thumbs.css}">
+    <link rel="stylesheet" href="static/lib/fancybox/jquery.fancybox-buttons.css"
+          th:href="@{/lib/fancybox/jquery.fancybox-buttons.css}">
+    <link rel="stylesheet" href="static/lib/snow/snow.css" th:href="@{/lib/snow/snow.css}">
+    <link rel="stylesheet" href="static/css/blog/global.css" th:href="@{/css/blog/global.css}">
+    <link rel="stylesheet" href="static/css/blog/index.css" th:href="@{/css/blog/index.css}">
+    <link rel="stylesheet" href="static/css/blog/blog-label.css" th:href="@{/css/blog/blog-label.css}">
+    <link rel="stylesheet" href="static/css/blog/blog-photo.css" th:href="@{/css/blog/blog-photo.css}">
+    <link rel="stylesheet" href="static/css/blog/blog-time.css" th:href="@{/css/blog/blog-time.css}">
+</head>
+<!--博客详头部-->
+<head th:fragment="detailed_head(title)">
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>
+    <title th:replace="${title}">抽取公共模块</title>
+    <link href="static/images/logo.png" th:href="@{/images/logo.png}" rel="icon" type="image/x-ico">
+    <link rel="stylesheet" href="../static/css/semantic.min.css" th:href="@{/css/semantic.min.css}">
+    <link rel="stylesheet" href="../static/css/blog/global.css" th:href="@{/css/blog/global.css}">
+    <!--动画效果-->
+    <link rel="stylesheet" href="../static/css/animate.css" th:href="@{/css/animate.css}">
+    <!--内容排版-->
+    <link rel="stylesheet" href="../static/lib/typo/typo.css" th:href="@{/lib/typo/typo.css}">
+    <!--代码高亮显示-->
+    <link rel="stylesheet" href="../static/lib/prism/prism.css" th:href="@{/lib/prism/prism.css}">
+    <!--目录生成-->
+    <link rel="stylesheet" href="../static/lib/tocbot/tocbot.css" th:href="@{/lib/tocbot/tocbot.css}">
+    <link rel="stylesheet" href="../static/css/blog/blog-detailed.css" th:href="@{/css/blog/blog-detailed.css}">
+    <link rel="stylesheet" href="../static/lib/snow/snow.css" th:href="@{/lib/snow/snow.css}">
+</head>
+<!--雪花效果-->
+<div class="snow" th:fragment="snow"></div>
+<!--头部菜单-->
+<header th:fragment="header_menu(n)" id="header"
+        class="ui inverted attached segment m-pt-pb m-bg-transparent m-border-transparent">
+    <div class="ui container">
+        <div class="ui inverted stackable secondary menu">
+            <img src="../../static/images/logo.png" th:href="@{/images/logo.png}" alt="">
+            <h2 class="ui header item">DoraeLamon</h2>
+            <a href="/index" class="m-mobile-item item m-mobile-hide" th:classappend="${n == 1 ? 'active':''}"><i
+                    class="home icon"></i>首页</a>
+            <a href="/label" class="m-mobile-item item m-mobile-hide" th:classappend="${n == 2 ? 'active':''}"><i
+                    class="tags icon"></i>标签</a>
+            <a href="/category" class="m-mobile-item item m-mobile-hide" th:classappend="${n == 3 ? 'active':''}"><i
+                    class="bookmark icon"></i>分类</a>
+            <a href="/time" class="m-mobile-item item m-mobile-hide" th:classappend="${n == 4 ? 'active':''}"><i
+                    class="archive icon"></i>归档</a>
+            <a href="/album" class="m-mobile-item item m-mobile-hide" th:classappend="${n == 5 ? 'active':''}"><i
+                    class="file image icon"></i>个人相册</a>
+            <a href="/comments" class="m-mobile-item item m-mobile-hide" th:classappend="${n == 6}? 'active':''"><i
+                    class="comments icon"></i>留言板</a>
+            <a href="" class="m-mobile-item item m-mobile-hide" th:classappend="${n == 7 ? 'active':''}"><i
+                    class="info icon"></i>关于我</a>
+            <div title="搜索"
+                 class="m-mobile-item item ui left inverted input large icon transparent center aligned m-mobile-hide">
+                <input id="search" type="text" placeholder="Search..." th:value="${KEYWORD}">
+                <i class="search icon link" onclick="keywordSearch(this)"></i>
+            </div>
+        </div>
+    </div>
+    <a href="javascript:;" id="m-mobile-btn" class="ui button black icon m-mobile-show"
+       style="position: absolute;top: 1em;right: 0;">
+        <i class="sidebar icon"></i>
+    </a>
+</header>
+
+
+<!--尾部-->
+<footer th:fragment="footer" class="ui segment stackable vertical inverted m-padding-5 m-bg-blog m-opacity footer">
+    <div class="ui container center aligned">
+        <!--格子布局占16份-->
+        <div class="ui grid divided inverted center aligned stackable">
+            <!--占3列-->
+            <div class="five wide column">
+                <div class="ui list link inverted">
+                    <h4 class="ui inverted header">联系我</h4>
+                    <a href="javascript:;" class="item"><span>Email:</span>1003448731@qq.com</a>
+                    <a href="javascript:;" class="item"><span>QQ:</span>1003448731</a>
+                    <a href="javascript:;" class="item"><span>WX:</span>tg98589</a>
+                    <a href="javascript:;" class="item"><span>博客园:</span>tg98589</a>
+                    <a href="https://blog.csdn.net/qq100344" target="_blank"
+                       class="item m-one-ellipsis"><span>CSDN:</span>https://blog.csdn.net/qq100344</a>
+                </div>
+            </div>
+            <div class="four wide column vertical">
+                <div class="ui list link inverted">
+                    <h4 class="ui inverted header">最新博客</h4>
+                    <a href="#" class="item m-one-ellipsis">第一篇博客第一篇博客第一篇博客第一篇博客</a>
+                    <a href="#" class="item m-one-ellipsis">第二篇博客第二篇博客第二篇博客第二篇博客</a>
+                    <a href="#" class="item m-one-ellipsis">第三篇博客第三篇博客第三篇博客第三篇博客</a>
+                    <a href="#" class="item m-one-ellipsis">第四篇博客第四篇博客第四篇博客第四篇博客</a>
+                    <a href="#" class="item m-one-ellipsis">第五篇博客第五篇博客第五篇博客第五篇博客</a>
+                </div>
+            </div>
+
+            <div class="three wide column center aligned vertical">
+                <div class="ui list link inverted">
+                    <h4 class="ui header  inverted">统计数据</h4>
+                    <a href="javascript:;" class="item"><span>文章总数:&nbsp;&nbsp;</span><span
+                            class="ui header basic orange"
+                            style="display: inline-block;">45</span>&nbsp;&nbsp;篇<span></span></a>
+                    <a href="javascript:;" class="item"><span>访问总数:&nbsp;&nbsp;</span><span
+                            class="ui header basic orange"
+                            style="display: inline-block;">65</span><span>&nbsp;&nbsp;次</span></a>
+                    <a href="javascript:;" class="item"><span>评论总数:&nbsp;&nbsp;</span><span
+                            class="ui header basic orange"
+                            style="display: inline-block;">24</span><span>&nbsp;&nbsp;条</span></a>
+                    <a href="javascript:;" class="item"><span>留言总数:&nbsp;&nbsp;</span><span
+                            class="ui header basic orange"
+                            style="display: inline-block;">78</span><span>&nbsp;&nbsp;条</span></a>
+                </div>
+            </div>
+            <!--占3列-->
+            <div class="four wide column center aligned vertical">
+                <h4 class="ui header inverted">关注我</h4>
+                <img src="https://lml-bucket.oss-cn-beijing.aliyuncs.com/qrcode/tg98589.png" alt=""
+                     class="ui image rounded middle aligned"
+                     style="width: 120px;height: 120px;">
+            </div>
+        </div>
+        <div class="ui section divider inverted"></div>
+        <p class="m-letter-spacing-opacity-8">Copyright © 2020 哆啦A梦--蓝胖子</p>
+    </div>
+</footer>
+<!--公共脚本-->
+<th:block th:fragment="script">
+    <script src="../static/js/vue.min.js" th:src="@{/js/vue.min.js}"></script>
+    <script src="../static/js/axios.min.js" th:src="@{/js/axios.min.js}"></script>
+    <script src="../static/js/vue-router.js" th:src="@{/js/vue-router.js}"></script>
+    <script src="../static/js/jquery-min-3.4.1.js" th:src="@{/js/jquery-min-3.4.1.js}"></script>
+    <script src="../static/lib/snow/snow.min.js" th:src="@{/lib/snow/snow.min.js}"></script>
+    <script src="../static/js/semantic.min.js" th:src="@{/js/semantic.min.js}"></script>
+    <script src="../static/lib/scrollreveal/scrollreveal.min.js"
+            th:src="@{/lib/scrollreveal/scrollreveal.min.js}"></script>
+    <script src="../static/lib/wow/wow.min.js" th:src="@{/lib/wow/wow.min.js}"></script>
+    <script src="../static/js/blog/global.js" th:src="@{/js/blog/global.js}"></script>
+</th:block>
+<!--index脚本-->
+<th:block th:fragment="index-script">
+    <script src="../static/js/swiper.min.js" th:src="@{/js/swiper.min.js}"></script>
+</th:block>
+<!--blog-time脚本-->
+<th:block th:fragment="time-script">
+    <script src="../static/js/blog/blog-time.js" th:src="@{/js/blog/blog-time.js}"></script>
+</th:block>
+<!--blog-detailed脚本-->
+<th:block th:fragment="detailed-script">
+    <script src="../static/js/jquery-min-3.4.1.js" th:src="@{/js/jquery-min-3.4.1.js}"></script>
+    <script src="../static/lib/snow/snow.min.js" th:src="@{/lib/snow/snow.min.js}"></script>
+    <script src="../static/js/semantic.min.js" th:src="@{/js/semantic.min.js}"></script>
+    <script src="../static/lib/tocbot/tocbot.min.js" th:src="@{/lib/tocbot/tocbot.min.js}"></script>
+    <script src="../static/lib/wow/wow.min.js" th:src="@{/lib/wow/wow.min.js}"></script>
+    <script src="../static/js/blog/global.js" th:src="@{/js/blog/global.js}"></script>
+</th:block>
+
+</body>
+</html>
