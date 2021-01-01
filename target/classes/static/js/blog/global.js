@@ -176,9 +176,9 @@ $(document).on("keyup", "#search", function (e) {
 //加载blog-label.html中所有标签的样式
 forEach(labels, 1);
 //加载index.html中所有标签的样式
-forEach($(".blog .blog-label > span"), 1);
+forEach($(".blog .blog-label > .chip"), 1);
 //加载blog-detailed.html中所有标签的样式
-forEach($(".blog-ml > span"), 1);
+forEach($(".blog-ml > .chip"), 1);
 //加载blog-category.html中所有标签的样式
 forEach(category_labels, 1);
 //原创标签样式

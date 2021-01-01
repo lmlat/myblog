@@ -142,10 +142,10 @@
         margin: 10px !important;
     }
 
-    /*.timeline ul li .blog-time-cards div {
+    .timeline ul li .blog-time-cards div {
         width: 80%;
         margin: 10px;
-    }*/
+    }
     .timeline ul li:nth-of-type(even) > .blog-time-cards {
         left: -289px;
     }

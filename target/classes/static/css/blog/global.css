@@ -2,6 +2,10 @@
 /*统一用  m-* 来命令自定义类名样式*/
 /*==============标签定义==================*/
 
+* {
+    touch-action: pan-y;
+}
+
 html {
     line-height: 1.5;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !important;

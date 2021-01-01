@@ -86,7 +86,7 @@
 }
 
 @media screen and (max-width: 768px) {
-    .blog-title {
+    /*.blog-title {
         position: absolute;
         bottom: 1.5em;
         left: 0;
@@ -97,5 +97,5 @@
         color: #eee !important;
         text-align: center !important;
         width: 100%;
-    }
+    }*/
 }

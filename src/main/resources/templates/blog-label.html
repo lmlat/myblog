@@ -87,7 +87,7 @@
                           th:attr="data-id=*{id}" v-on:click.stop.prevent="setLabelEvents($event)"
                           class="chip center-align waves-effect m-margin-r-2em blog-one-label">
                         <span th:text="*{name}">SpringBoot</span>
-                        <span class="tag-length" th:text="*{blogs.size()}">3</span>
+                        <span class="tag-length" th:text="*{#arrays.length(blogs)}">3</span>
                     </span>
                 </div>
             </div>

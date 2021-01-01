@@ -61,11 +61,11 @@
                        th:classappend="*{flag==1}?'orange':(*{flag==2}?'blue':'yellow')"
                        th:text="*{flag==1}? '原创':(*{flag==2}?'转载':'翻译')">原创</a>
                     <div class="blog-ml">
-                         <span th:each="label,stat : *{labels}"
-                               class="chip center-align waves-effect m-margin-r-2em blog-one-label">
+                         <a href="javascript:;" th:each="label,stat : *{labels}"
+                              th:href="@{/label(labelId=${label.id})}" class="chip center-align waves-effect m-margin-r-2em blog-one-label">
                              <span th:text="${label.name}">SpringBoot</span>
-                            <span class="tag-length" th:text="${label.blogs.size()}">3</span>
-                        </span>
+                            <span class="tag-length" th:text="${#arrays.length(label.blogs)}">3</span>
+                        </a>
                     </div>
                 </div>
                 <div class="ui grid">
@@ -335,9 +335,10 @@
 <!--/*/</th:block>/*/-->
 <script src="../static/js/jquery.scrollTo.min.js" th:src="@{/js/jquery.scrollTo.min.js}"></script>
 <script th:inline="javascript">
+    //代码高亮
     let codes = $("code");
     $.each(codes, function (index) {
-        $(this).parent().attr("class",$(this).attr("class"));
+        $(this).parent().attr("class", $(this).attr("class"));
     });
     // 开启滚动动画
     new WOW().init();
