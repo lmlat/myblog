@@ -1,5 +1,6 @@
 package com.aitao.myblog.controller;
 
+import com.aitao.myblog.domain.Blog;
 import com.aitao.myblog.domain.Comment;
 import com.aitao.myblog.domain.User;
 import com.aitao.myblog.service.IBlogService;
@@ -31,9 +32,9 @@ public class BlogCommentController {
     @Value("${comment.avatar}")
     private String avatar;
 
-    @RequestMapping({"/comments","/comments/"})
+    @RequestMapping({"/comments", "/comments/"})
     public String comment(Model model) {
-        model.addAttribute("comments", commentService.listCommentsLimit());
+        model.addAttribute("comments", commentService.listCommentsById());
         return "blog-comments";
     }
 
@@ -45,6 +46,11 @@ public class BlogCommentController {
     @GetMapping("/comments/{id}")
     public String loadCommentListFragments(@PathVariable("id") Long id,
                                            Model model) {
+        if (id == -1) {
+            System.out.println("id:" + id);
+            model.addAttribute("comments", commentService.listCommentsById());
+            return "blog-comments :: commentList";
+        }
         model.addAttribute("comments", commentService.listCommentsById(id));
         return "blog-detailed :: commentList";
     }
@@ -57,7 +63,11 @@ public class BlogCommentController {
     @PostMapping("/comments")
     public String saveComment(Comment comment, HttpSession session) {
         Long blogId = comment.getBlog().getId();
-        comment.setBlog(blogService.getBlogById(blogId));
+        if (blogId != -1) {
+            comment.setBlog(blogService.getBlogById(blogId));
+        } else {
+            comment.setBlog(null);
+        }
         User user = (User) session.getAttribute("USER");
         if (user != null) {
             comment.setAvatar(user.getAvatar());

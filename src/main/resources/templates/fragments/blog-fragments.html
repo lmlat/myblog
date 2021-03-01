@@ -18,6 +18,8 @@
           th:href="@{/lib/fancybox/jquery.fancybox-thumbs.css}">
     <link rel="stylesheet" href="static/lib/fancybox/jquery.fancybox-buttons.css"
           th:href="@{/lib/fancybox/jquery.fancybox-buttons.css}">
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <link rel="stylesheet" href="static/lib/snow/snow.css" th:href="@{/lib/snow/snow.css}">
     <link rel="stylesheet" href="static/css/blog/global.css" th:href="@{/css/blog/global.css}">
     <link rel="stylesheet" href="static/css/blog/index.css" th:href="@{/css/blog/index.css}">
@@ -51,10 +53,10 @@
 <div class="snow" th:fragment="snow"></div>
 <!--头部菜单-->
 <header th:fragment="header_menu(n)" id="header"
-        class="ui inverted attached segment m-pt-pb m-bg-transparent m-border-transparent">
+        class="ui inverted attached segment m-pt-pb m-bg-transparent m-border-transparent m-user-select">
     <div class="ui container">
         <div class="ui inverted stackable secondary menu">
-            <img src="../../static/images/logo.png" th:href="@{/images/logo.png}" alt="">
+<!--            <img class="ui image" src="static/images/logo.png" th:src="@{/images/logo.png}" alt="">-->
             <h2 class="ui header item">DoraeLamon</h2>
             <a href="/index" class="m-mobile-item item m-mobile-hide" th:classappend="${n == 1 ? 'active':''}"><i
                     class="home icon"></i>首页</a>
@@ -85,7 +87,7 @@
 
 
 <!--尾部-->
-<footer th:fragment="footer" class="ui segment stackable vertical inverted m-padding-5 m-bg-blog m-opacity footer">
+<footer th:fragment="footer" class="ui segment stackable vertical inverted m-padding-5 m-bg-blog m-opacity m-user-select footer">
     <div class="ui container center aligned">
         <!--格子布局占16份-->
         <div class="ui grid divided inverted center aligned stackable">
@@ -126,16 +128,19 @@
                     <h4 class="ui header  inverted">统计数据</h4>
                     <a href="javascript:;" class="item"><span>文章总数:&nbsp;&nbsp;</span><span
                             class="ui header basic orange"
-                            style="display: inline-block;">45</span>&nbsp;&nbsp;篇<span></span></a>
+                            style="display: inline-block;"
+                            th:text="${session.countBlog}">45</span>&nbsp;&nbsp;篇<span></span></a>
                     <a href="javascript:;" class="item"><span>访问总数:&nbsp;&nbsp;</span><span
                             class="ui header basic orange"
-                            style="display: inline-block;">65</span><span>&nbsp;&nbsp;次</span></a>
-                    <a href="javascript:;" class="item"><span>评论总数:&nbsp;&nbsp;</span><span
-                            class="ui header basic orange"
-                            style="display: inline-block;">24</span><span>&nbsp;&nbsp;条</span></a>
+                            style="display: inline-block;"
+                            th:text="${session.countVisit}">65</span><span>&nbsp;&nbsp;次</span></a>
                     <a href="javascript:;" class="item"><span>留言总数:&nbsp;&nbsp;</span><span
                             class="ui header basic orange"
-                            style="display: inline-block;">78</span><span>&nbsp;&nbsp;条</span></a>
+                            style="display: inline-block;" th:text="${session.countComment}">24</span><span>&nbsp;&nbsp;条</span></a>
+                    <a href="javascript:;" class="item"><span>回复总数:&nbsp;&nbsp;</span><span
+                            class="ui header basic orange"
+                            style="display: inline-block;"
+                            th:text="${session.countReply}">78</span><span>&nbsp;&nbsp;条</span></a>
                 </div>
             </div>
         </div>
@@ -149,6 +154,8 @@
     <script src="../static/js/vue.min.js" th:src="@{/js/vue.min.js}"></script>
     <script src="../static/js/axios.min.js" th:src="@{/js/axios.min.js}"></script>
     <script src="../static/js/vue-router.js" th:src="@{/js/vue-router.js}"></script>
+    <!-- 引入elementui组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
     <script src="../static/js/jquery-min-3.4.1.js" th:src="@{/js/jquery-min-3.4.1.js}"></script>
     <script src="../static/lib/snow/snow.min.js" th:src="@{/lib/snow/snow.min.js}"></script>
     <script src="../static/js/semantic.min.js" th:src="@{/js/semantic.min.js}"></script>

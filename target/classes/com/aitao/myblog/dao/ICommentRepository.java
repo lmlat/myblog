@@ -18,15 +18,19 @@ public interface ICommentRepository extends JpaRepository<Comment, Long>, JpaSpe
     @Query(value = "select * from comment where blog_id=:id and status=1 and comment_id is null order by create_time asc", nativeQuery = true)
     List<Comment> listCommentsById(@Param("id") Long id);
 
+    //获取博客编号为null的所有根评论（1级评论）
+    @Query(value = "select * from comment where status=1 and comment_id is null and blog_id is null order by create_time asc", nativeQuery = true)
+    List<Comment> listCommentsById();
+
     //获取所有根评论（1级评论）
     @Query(value = "select *from comment where status = 1 and comment_id is null", nativeQuery = true)
     List<Comment> listCommentsNull();
 
     //评论数统计
     @Query(value = "select count(id) as total from comment where status = 1 and comment_id is null", nativeQuery = true)
-    Long countComment();
+    Long countComments();
 
     //回复数统计
-    @Query(value = "select count(id) as total from comment where status = 1 and comment_id is null", nativeQuery = true)
-    Long countReply();
+    @Query(value = "select count(id) as total from comment where status = 1 and comment_id is not null", nativeQuery = true)
+    Long countReplys();
 }

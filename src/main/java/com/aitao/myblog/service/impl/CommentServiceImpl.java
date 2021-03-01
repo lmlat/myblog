@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.lang.Nullable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,6 +47,17 @@ public class CommentServiceImpl implements ICommentService {
     }
 
     /**
+     * 根据博客编号获取评论信息
+     * blog.id = null
+     * @return
+     */
+    @Override
+    public List<Comment> listCommentsById() {
+        List<Comment> comments = commentRepository.listCommentsById();//获取所有根评论信息
+        return iteratorRootComment(comments);//遍历所有根评论对象下的子评论对象
+    }
+
+    /**
      * 添加评论
      *
      * @param comment 评论信息
@@ -71,6 +83,18 @@ public class CommentServiceImpl implements ICommentService {
         //获取评论表中所有根评论
         List<Comment> comments = commentRepository.listCommentsNull();
         return iteratorRootComment(comments);
+    }
+
+    //统计评论数
+    @Override
+    public Long countComments() {
+        return commentRepository.countComments();
+    }
+
+    //统计回复数
+    @Override
+    public Long countReplys() {
+        return commentRepository.countReplys();
     }
 
     //存放迭代找出的所有子代的集合

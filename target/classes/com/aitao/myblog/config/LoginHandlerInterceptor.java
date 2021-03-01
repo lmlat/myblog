@@ -16,10 +16,11 @@ public class LoginHandlerInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response,
                              Object handler) throws Exception {
-        if(request.getSession().getAttribute("USER") == null){
+       /* if(request.getSession().getAttribute("USER") == null){
             response.sendRedirect("/admin/login");
             return false;
         }
-        return true;
+        return true;*/
+       return true;
     }
 }

@@ -206,7 +206,7 @@
                                 <div class="text m-font-size-1em" th:text="${comment.content}">
                                     How artistic!
                                 </div>
-                                <div class="actions">
+                                <div class="actions" style="text-align: right">
                                     <a href="javascript:;" class="reply"
                                        th:attr="data-commentid=${comment.id},data-nickname=${comment.nickname}"
                                        onclick="reply($(this))">回复</a>
@@ -238,7 +238,7 @@
                                                 How artistic!
                                             </span>
                                         </div>
-                                        <div class="actions">
+                                        <div class="actions" style="text-align: right">
                                             <a href="javascript:;" class="reply"
                                                th:attr="data-commentid=${reply.id},data-nickname=${reply.nickname}"
                                                onclick="reply($(this))">回复</a>

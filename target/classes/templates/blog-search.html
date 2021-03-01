@@ -64,7 +64,7 @@
                 </div>
             </div>
             <!--数据为空时显示该区域内容-->
-            <div class="ui segment flowing center aligned" th:if="${#arrays.length(blogs)}<=0">
+            <div class="ui segment flowing center aligned" style="height:300px;line-height: 150px;" th:if="${#arrays.length(blogs)}<=0">
                 <img src="../static/images/404.png" th:src="@{/images/404.png}" alt=""
                      class="ui avatar tiny image m-opacity">
                 <h3 class="ui header m-opacity">很遗憾,没有找到多余的数据~_~</h3>
@@ -116,7 +116,10 @@
                                     </div>
                                 </div>
                                 <div class="three wide column">
-                                    <div class="blog-label">
+                                    <i class="bookmark icon"></i>
+                                    <a href="javascript:;" class="m-c-inherit" th:title="${blog.category.name}"
+                                       onclick="loadCategory(this)" th:attr="data-categoryId=${blog.category.id}" th:text="${blog.category.name}"></a>
+                                    <!--<div class="blog-label">
                                     <span class="chip center-align waves-effect m-margin-r-2em blog-one-label"
                                           onclick="loadCategory(this)" th:title="*{category.name}"
                                           style="display: flex;justify-content: space-around"
@@ -124,7 +127,7 @@
                                         <span th:text="*{category.name}">SpringBoot</span>
                                         <span class="tag-length" th:text="*{#arrays.length(category.blogs)}">3</span>
                                     </span>
-                                    </div>
+                                    </div>-->
                                 </div>
                             </div>
                         </div>

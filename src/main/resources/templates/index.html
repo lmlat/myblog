@@ -313,14 +313,18 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="three wide column">
-                                <div class="blog-label">
+                            <div class="three wide column center aligned" style="line-height: 32px">
+                                <i class="bookmark icon"></i>
+                                <a href="javascript:;" class="m-c-inherit" th:title="${blog.category.name}"
+                                   onclick="loadCategory(this)" th:attr="data-categoryId=${blog.category.id}"
+                                   th:text="${blog.category.name}"></a>
+                                <!--<div class="blog-label">
                                     <span class="chip center-align waves-effect m-margin-r-2em blog-one-label"
                                           onclick="loadCategory(this)" th:title="${blog.category.name}"
                                           style="display: flex;justify-content: space-around"
                                           th:attr="data-categoryId=${blog.category.id}" th:text="${blog.category.name}">
                                     </span>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                     </div>

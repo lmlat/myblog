@@ -48,15 +48,19 @@
         <!--卡片博客数据-->
         <div id="blog-label-cards"
              class="ui segment vertical padded">
-            <div class="ui cards">
-                <div class="ui card m-blog-label-card wow fadeInDown" th:each="blog,stat : ${CURRENT_BLOG}"
+            <div class="ui link cards">
+                <div class="ui fluid card m-blog-label-card wow fadeInDown" th:each="blog,stat : ${CURRENT_BLOG}"
                      th:object="${blog}">
-                    <a href="" class="image">
+                    <a href="javascript:;" onclick="look(this)" th:attr="data-id=*{id},data-title=*{title}"
+                       class="image">
                         <h2 class="ui header m-one-ellipsis m-padding-1"
-                            style="position: absolute;bottom: 0;left: 0;width: 300px;font: 400 22px '';color:#fff"
+                            style="position: absolute;bottom: 0;left: 0;width: 300px;font: 400 22px '';color:#fff;z-index:999;"
                             th:text="*{title}">商城</h2>
-                        <img src="../static/images/other/23.jpg" th:src="*{bgImage}"
-                             style="height:200px;width:100%;" alt="">
+                        <div class="ui slide masked reveal image">
+                            <img src="../static/images/other/23.jpg" th:src="*{bgImage}"
+                                 style="height:200px;width:100%;" alt="" class="visible content">
+<!--                            <img th:src="@{/images/other/23.jpg}" style="height:200px;width:100%;" class="hidden content">-->
+                        </div>
                     </a>
                     <div class="content" style="padding-bottom:6px;color: #34495e;">
                         <div class="m-more-ellipsis" style="font-size:16px;margin-bottom:6px;" th:text="*{keyword}">
@@ -64,17 +68,18 @@
                         </div>
                         <span class="right floated">
                           <i class="bookmark icon"></i>
-                          <span th:text="*{category.name}">17 likes</span>
+                          <a class="m-c-inherit" href="javascript:;" th:href="@{/category(categoryId=*{category.id})}"
+                             th:text="*{category.name}">17 likes</a>
                         </span>
                         <i class="clock outline icon"></i>
                         <span th:text="*{#dates.format(updateTime,'yyyy-MM-dd HH:mm')}">2020-03-20</span>
                     </div>
-                    <div class="content" style="padding: 9px">
-                        <span th:each="label,stat : *{labels}"
-                              class="m-bg-blog chip center-align waves-effect" style="background-color: #F5EEF8;">
-                            <span th:text="${label.name}">Redis</span>
-                            <span th:text="${label.blogs.size()}" class="tag-length">3</span>
-                        </span>
+                    <div class="extra content" style="padding: 9px">
+                        <a href="javascript:;" th:href="@{/label(labelId=${label.id})}" th:each="label,stat : *{labels}"
+                           class="m-bg-blog chip center-align waves-effect blog-one-label m-c-inherit" style="background-color: #F5EEF8;">
+                            <span class="m-c-34495e" th:text="${label.name}">Redis</span>
+                            <span class="tag-length" th:text="${#arrays.length(label.blogs)}">3</span>
+                        </a>
                     </div>
                 </div>
             </div>

@@ -23,6 +23,14 @@ public interface ICommentService {
     List<Comment> listCommentsById(Long id);
 
     /**
+     *
+     * 根据博客编号获取评论集合及子集
+     * blog.id = null
+     * @return
+     */
+    List<Comment> listCommentsById();
+
+    /**
      * 添加评论
      *
      * @param comment 评论信息
@@ -35,4 +43,19 @@ public interface ICommentService {
      * @return
      */
     List<Comment> listCommentsLimit();
+
+    /**
+     * 统计评论数
+     * @return
+     */
+    Long countComments();
+
+    /**
+     * 统计回复数
+     * @return
+     */
+    Long countReplys();
+
+
+
 }

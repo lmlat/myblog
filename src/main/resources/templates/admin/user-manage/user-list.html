@@ -54,7 +54,7 @@
                 <div class="layui-card-header">
                     <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除
                     </button>
-                    <button class="layui-btn" onclick="xadmin.open('添加用户','craete-user.html',600,400)"><i
+                    <button class="layui-btn" onclick="xadmin.open('添加用户','craete-user',600,400)"><i
                             class="layui-icon"></i>添加
                     </button>
                 </div>
@@ -65,11 +65,12 @@
                             <th>
                                 <input type="checkbox" lay-filter="checkall" name="" lay-skin="primary">
                             </th>
-                            <th>ID</th>
+                            <th>用户编号</th>
                             <th>用户名</th>
-                            <th>性别</th>
-                            <th>手机</th>
-                            <th>地址</th>
+                            <th>昵称</th>
+                            <th>邮箱</th>
+                            <th>电话</th>
+                            <th>个性签名</th>
                             <th>状态</th>
                             <th>操作</th>
                         </tr>
@@ -83,6 +84,7 @@
                             <td>小明</td>
                             <td>男</td>
                             <td>13000000000</td>
+                            <td>13000000000</td>
                             <td>北京市 海淀区</td>
                             <td class="td-status">
                                 <span class="layui-btn layui-btn-normal layui-btn-mini">已启用</span></td>
@@ -90,7 +92,7 @@
                                 <a onclick="member_stop(this,'10001')" href="javascript:;" title="启用">
                                     <i class="layui-icon">&#xe601;</i>
                                 </a>
-                                <a title="编辑" onclick="xadmin.open('编辑','edit-user.html',600,400)"
+                                <a title="编辑" onclick="xadmin.open('编辑','edit-user',600,400)"
                                    href="javascript:;">
                                     <i class="layui-icon">&#xe642;</i>
                                 </a>
